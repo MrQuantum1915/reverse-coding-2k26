@@ -28,3 +28,12 @@ body {
   background-color: #00e1ff;
   color: var(--background);
 }
+
+/*overlay fade animation*/
+@keyframes overlay-fade {
+  from { opacity: 1; }
+  to   { opacity: 0.2; }
+}
+.animate-overlay-fade {
+  animation: overlay-fade 5s ease-in-out forwards;
+}

@@ -8,8 +8,9 @@ export default function Home() {
                 alt="Background"
                 fill
                 priority
-                className="object-cover object-center -z-10 opacity-50"
+                className="object-cover object-center -z-20"
             />
+            <div className="absolute inset-0 bg-black -z-10 animate-overlay-fade" />
         </div>
     )
 }
