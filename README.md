@@ -32,8 +32,8 @@ Ensure you have Node.js 18+ installed.
 1. Clone the repository:
 
 ```bash 
-git clone [https://github.com/your-username/tesseract-portal.git](https://github.com/your-username/tesseract-portal.git)
-cd tesseract-portal
+git clone https://github.com/MrQuantum1915/reverse-coding-2k26.git
+cd reverse-coding-2k26
 ```
 
 
