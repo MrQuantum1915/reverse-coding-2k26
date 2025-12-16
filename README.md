@@ -69,6 +69,36 @@ app/
 └── components/       # Reusable components
 ```
 
+## Contribution Guidelines
+
+1. Fork the repository and create your branch:
+
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+2. Make your changes, then commit them:
+
+   ```bash
+   git commit -m "Add feature: description of feature"
+   ```
+
+3. Push to your forked repository:
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+4. Open a pull request to the *main* branch of the repository.
+
+Before submitting, ensure your code adheres to our coding standards and passes all linting and testing checks.
+
+Run Build command before submitting pull request
+
+```bash
+npm run build
+```
+
 ## License
 
 See [LICENSE](LICENSE) for details.
