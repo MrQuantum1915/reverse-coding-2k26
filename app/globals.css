@@ -30,6 +30,18 @@ html, body {
   max-width: 100vw;
   overflow-x: hidden;
   overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Hide vertical scrollbar but keep scrolling */
+html, body {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 * {
@@ -48,4 +60,31 @@ html, body {
 }
 .animate-overlay-fade {
   animation: overlay-fade 5s ease-in-out forwards;
+}
+
+.glow-wrapper:hover {
+  filter:
+    drop-shadow(0 0 6px var(--glow))
+    drop-shadow(0 0 14px var(--glow))
+    drop-shadow(0 0 24px var(--glow));
+}
+
+@keyframes megaGlow {
+  0% {
+    filter:
+      drop-shadow(0 0 25px rgba(0,255,255,0.4))
+      drop-shadow(0 0 60px rgba(0,255,255,0.25));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 50px rgba(0,255,255,0.95))
+      drop-shadow(0 0 120px rgba(0,255,255,0.7))
+      drop-shadow(0 0 220px rgba(0,255,255,0.45))
+      drop-shadow(0 0 320px rgba(0,255,255,0.25));
+  }
+  100% {
+    filter:
+      drop-shadow(0 0 25px rgba(0,255,255,0.4))
+      drop-shadow(0 0 60px rgba(0,255,255,0.25));
+  }
 }

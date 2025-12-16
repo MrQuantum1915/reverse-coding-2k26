@@ -7,6 +7,7 @@ interface ButtonProps {
   borderColor?: string;
   fillColor?: string;
   textColor?: string;
+  glowColor?: string;
   strokeWidth?: number;
   size?: "sm" | "md" | "lg";
   width?: string | number;
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   borderColor = "#00FFFF",
   fillColor = "rgba(0, 40, 40, 0.9)",
   textColor = "white",
+  glowColor,
   strokeWidth = 2,
   size = "md",
   width,
@@ -42,6 +44,16 @@ const Button: React.FC<ButtonProps> = ({
   const format = (v?: string | number) =>
     typeof v === "number" ? `${v}px` : v;
 
+  const computedFontSize = height
+    ? `calc(${format(height)} * 0.40)`
+    : sizes[size].fontSize;
+
+  const glow = disabled
+    ? "none"
+    : `drop-shadow(0 0 6px ${glowColor || borderColor})
+       drop-shadow(0 0 14px ${glowColor || borderColor})
+       drop-shadow(0 0 24px ${glowColor || borderColor})`;
+
   return (
     <button
       onClick={onClick}
@@ -55,7 +67,7 @@ const Button: React.FC<ButtonProps> = ({
         cursor: disabled ? "not-allowed" : "pointer",
       }}
     >
-      {/* OUTER BORDER SHAPE */}
+      {/* OUTER BORDER + GLOW */}
       <span
         aria-hidden
         style={{
@@ -63,10 +75,11 @@ const Button: React.FC<ButtonProps> = ({
           inset: 0,
           clipPath,
           background: borderColor,
+          filter: glow,
         }}
       />
 
-      {/* INNER FILL SHAPE (CONTROLS SIZE) */}
+      {/* INNER FILL */}
       <span
         style={{
           position: "relative",
@@ -76,12 +89,14 @@ const Button: React.FC<ButtonProps> = ({
           width: format(width) || (fullWidth ? "100%" : undefined),
           height: format(height),
           padding: height ? 0 : sizes[size].padding,
-          fontSize: sizes[size].fontSize,
+          fontSize: computedFontSize,
+          lineHeight: 1,
           color: textColor,
           background: fillColor,
           clipPath,
           margin: strokeWidth,
           zIndex: 1,
+          whiteSpace: "nowrap",
         }}
       >
         {text || children}
