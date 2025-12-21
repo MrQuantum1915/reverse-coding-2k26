@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Audiowide } from "next/font/google";
 import "./navbar.css";
@@ -9,57 +10,89 @@ const audiowide = Audiowide({
   subsets: ["latin"],
 });
 
-function Navbar() {
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="fixed  z-10000 w-full">
-    <nav className="sticky top-0 z-50 w-full  bg-black border-b border-white/50 py-3 md:py-4 transition-all duration-300 ease-out">
-      <div className="w-full mx-auto h-fit flex flex-col md:flex-row items-center justify-between max-w-6xl gap-3 md:gap-5 px-3 md:px-6 transition-all duration-300 ease-out">
+    <>
+      <nav className="fixed top-0 z-[10000] w-full bg-black border-b border-white/50">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center py-3">
 
-        {/* Left links */}
-        <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-5">
-          <Link
-            href="/"
-            className="px-3 sm:px-4 py-1.5 sm:py-2 text-white text-sm sm:text-base md:text-lg opacity-70 hover:opacity-100 hover:underline transition-all duration-200 ease-out"
-          >
-            HOME
-          </Link>
+            <div className="hidden md:flex justify-center gap-20">
+              <Link className="nav-link" href="/"><p className="text-2xl">HOME</p></Link>
+              <Link className="nav-link" href="/team"><p className="text-2xl">TEAM</p></Link>
+            </div>
 
-          <Link
-            href="/team"
-            className="px-3 sm:px-4 py-1.5 sm:py-2 text-white text-sm sm:text-base md:text-lg opacity-70 hover:opacity-100 hover:underline transition-all duration-200 ease-out"
-          >
-            TEAM
-          </Link>
+            <button
+              className="md:hidden justify-self-start text-white text-2xl"
+              onClick={() => setOpen(true)}
+            >
+              ☰
+            </button>
+
+            <Link
+              href="/"
+              className={`
+                ${audiowide.className}
+                justify-self-center
+                bg-white text-black
+                px-6
+                py-1.5
+                logo
+                whitespace-nowrap
+                hover:text-cyan-400
+                transition
+              `}
+              style={{
+                fontSize: "clamp(1.1rem, 3vw, 2.4rem)",
+                letterSpacing: "0.35em",
+              }}
+            >
+              TESSERACT
+            </Link>
+
+           
+            <div className="hidden md:flex justify-center gap-20">
+              <Link className="nav-link" href="/team"><p className="text-2xl">RULES</p></Link>
+              <Link className="nav-link" href="/login"><p className="text-2xl">SIGN-IN</p></Link>
+            </div>
+          </div>
         </div>
+      </nav>
 
-        {/* Center logo */}
-        <Link
-          href="/"
-          className={`text-black text-2xl sm:text-3xl md:text-4xl px-6 sm:px-10 md:px-14 py-2 bg-white logo ${audiowide.className} font-black tracking-[0.35em] hover:text-cyan-400 hover:scale-102 transition-all duration-300 ease-out`}
-        >
-          TESSERACT
-        </Link>
+     
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/60 z-[9998]"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-        {/* Right links */}
-        <div className="flex flex-wrap justify-center md:justify-end gap-3 md:gap-5">
-          <Link
-            href="/team"
-            className="px-3 sm:px-4 py-1.5 sm:py-2 text-white text-sm sm:text-base md:text-lg opacity-70 hover:opacity-100 hover:underline transition-all duration-200 ease-out"
+     
+      <aside
+        className={`
+          fixed top-0 left-0 h-full w-64
+          bg-black border-r border-white/20
+          z-[9999]
+          transform transition-transform duration-300
+          ${open ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <div className="flex flex-col p-6 gap-6">
+          <button
+            className="text-white text-2xl self-end"
+            onClick={() => setOpen(false)}
           >
-            RULES
-          </Link>
+            ✕
+          </button>
 
-          <Link
-            href="/login"
-            className="px-3 sm:px-4 py-1.5 sm:py-2 text-white text-sm sm:text-base md:text-lg opacity-70 hover:opacity-100 hover:underline transition-all duration-200 ease-out"
-          >
-            SIGN IN
-          </Link>
+          <Link onClick={() => setOpen(false)} className="sidebar-link" href="/">HOME</Link>
+          <Link onClick={() => setOpen(false)} className="sidebar-link" href="/team">TEAM</Link>
+          <Link onClick={() => setOpen(false)} className="sidebar-link" href="/team">RULES</Link>
+          <Link onClick={() => setOpen(false)} className="sidebar-link" href="/login">SIGN IN</Link>
         </div>
-      </div>
-    </nav>
-    </div>
+      </aside>
+    </>
   );
 }
-
-export default Navbar;
