@@ -1,12 +1,35 @@
-export const dynamic = "force-dynamic";
-import { NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../lib/supabaseServer";
+import { NextResponse, NextRequest } from "next/server";
+import { createClient_server } from "@/utils/supabaseServer";
 
-export async function GET(request: Request) {
-   console.log("CALLBACK URL:", request.url);
-  const supabase = await createSupabaseServerClient();
+export async function GET(request: NextRequest) {
+  const { searchParams, origin } = new URL(request.url);
+  const code = searchParams.get("code");
 
-  const {data,error}=await supabase.auth.exchangeCodeForSession(request.url);
-console.log("EXCHANGE RESULT:", { data, error });
-  return NextResponse.redirect(new URL("/", request.url));
+  if (!code) {
+    return NextResponse.redirect(`${origin}/auth/error`);
+  }
+
+  const supabase = await createClient_server();
+
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  if (error) {
+    return NextResponse.redirect(`${origin}/auth/error`);
+  }
+
+  // ✅ OPTIONAL: profile check (does NOT affect redirect)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    await supabase
+      .from("profiles")
+      .select("username")
+      .eq("user_id", user.id)
+      .single();
+    // no redirect here
+  }
+
+  // ✅ SINGLE, FINAL REDIRECT
+  return NextResponse.redirect(`${origin}/`);
 }

@@ -1,9 +1,37 @@
 "use client";
 
 import Image from "next/image";
-import { supabase } from "../lib/supabaseClient";
+import { createClient_client } from "@/utils/supabaseClient";
 import {useState,useEffect} from "react";
+import { AuthChangeEvent } from "@supabase/supabase-js";
+const supabase = createClient_client();
 export default function Page() {
+   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+  const getSession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    setUser(session?.user ?? null)
+    setLoading(false)
+  }
+
+  getSession()
+
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: any) => {
+    setUser(session?.user ?? null)
+  })
+
+  return () => subscription.unsubscribe()
+}, [])
+console.log(user);
+
+
   const signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -12,31 +40,7 @@ export default function Page() {
       },
     });
   };
-  
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // 1️⃣ Get initial session AFTER cookies are restored
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null);
-      setLoading(false);
-    });
-
-    // 2️⃣ Listen for future auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-useEffect(() => {
-  supabase.auth.getSession().then((res) => {
-    console.log("SESSION:", res);
-  });
-}, []);
   if (loading) return null;
 const logout = async () => {
   await supabase.auth.signOut();
