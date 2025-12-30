@@ -36,7 +36,7 @@ export default function Home() {
     height: 100,
     size: "lg",
   });
-  const [snowCount, setSnowCount] = useState(500);
+  const [snowCount, setSnowCount] = useState(100);
 
   useEffect(() => {
     const updateSizes = () => {
@@ -58,7 +58,7 @@ export default function Home() {
   return (
     <div className="bg-black relative">
       <Preloader />
-      <div className="pointer-events-none fixed inset-0 z-50 opacity-[0.04] mix-blend-overlay">
+      {/* <div className="pointer-events-none fixed inset-0 z-50 opacity-[0.04] mix-blend-overlay">
         <div
           className="absolute inset-0 bg-repeat w-full h-full"
           style={{
@@ -66,7 +66,7 @@ export default function Home() {
               'url("https://grainy-gradients.vercel.app/noise.svg")',
           }}
         />
-      </div>
+      </div> */}
 
       <div className="relative min-h-screen text-white overflow-hidden">
         <Image
@@ -74,7 +74,7 @@ export default function Home() {
           alt="Background"
           fill
           priority
-          className="object-cover object-center z-0 opacity-40"
+          className="object-cover object-center z-0 opacity-70 scale-120"
         />
         <VoidParticles />
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -93,13 +93,13 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/60 z-10" />
 
         <div className="relative z-20 min-h-screen">
-          <div className="absolute top-[14%] sm:top-[18%] left-1/2 -translate-x-1/2 w-full px-4 text-center select-none">
+          <div className="absolute top-[14%] sm:top-[25%] left-1/2 -translate-x-1/2 w-full px-4 text-center select-none">
             <div
               className={`
                 ${orbitron.className}
                 text-white/90
                 text-2xl sm:text-4xl md:text-5xl lg:text-6xl
-                tracking-[0.3em] sm:tracking-[0.35em]
+               
                 font-light
               `}
               style={{ textShadow: "0 0 14px rgba(0,255,255,0.22)" }}
@@ -108,22 +108,22 @@ export default function Home() {
                 className={`
                 ${orbitron.className}
                 text-white/90
-                text-2xl sm:text-4xl md:text-5xl lg:text-6xl
-                tracking-[0.3em] sm:tracking-[0.35em]
+                text-2xl sm:text-2xl md:text-3xl lg:text-4xl
                 font-light
               `}
               >
-                <HyperText text="CC × ENIGMA" className="" flame={true} />
+                {/* <HyperText text="CC × ENIGMA" className="" flame={true} /> */}
+                CC &times; ENIGMA
               </p>
             </div>
 
-            <div className="mt-2">
+            <div className="mt-[-1]">
               <GlitchText
                 text="PRESENTS"
                 className={`
                   ${orbitron.className}
-                  text-xl sm:text-lg md:text-3xl
-                  tracking-[0.35em] sm:tracking-[0.45em]
+                  text-white/50
+                  text-xl sm:text-lg md:text-2xl
                   font-light
                 `}
               />
@@ -156,26 +156,26 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute inset-x-4 sm:left-6 sm:right-6 bottom-8 md:left-24 md:right-24 md:bottom-20 flex flex-col md:flex-row gap-8 justify-between items-start md:items-end">
-            <div className="space-y-2 sm:space-y-3">
+          <div className="absolute inset-x-4 sm:left-6 sm:right-6 bottom-8 md:left-24 md:right-24 md:bottom-20 flex flex-col md:flex-row gap-8 justify-between items-center md:items-end">
+            <div className="space-y-2 sm:space-y-3 text-center md:text-left">
               <FadeIn delay={0.2}>
-                <p className="text-lg sm:text-2xl md:text-4xl lg:text-5xl font-semibold uppercase tracking-[0.18em] text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                <p className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-light uppercase tracking-[0.18em] text-white">
                   18th January, 2026
                 </p>
               </FadeIn>
 
               <FadeIn delay={0.2}>
-                <p className="text-base sm:text-xl md:text-3xl lg:text-4xl font-medium uppercase tracking-[0.22em] text-white">
+                <p className="text-base sm:text-xl md:text-3xl lg:text-4xl font-light uppercase tracking-[0.22em] text-white">
                   Sunday
                 </p>
               </FadeIn>
 
-              <p className="text-base sm:text-xl md:text-3xl lg:text-4xl font-medium uppercase tracking-[0.2em] text-cyan-400">
-                21:00 – 23:00
+              <p className="text-base sm:text-xl md:text-3xl lg:text-4xl font-light uppercase tracking-[0.2em] text-white">
+                21:00 - 23:00 IST
               </p>
             </div>
 
-            <div className="w-full md:w-auto flex justify-start md:justify-end">
+            <div className="w-full md:w-auto flex justify-center md:justify-end">
               <div className="transition-all duration-500 ease-out hover:drop-shadow-[0_0_35px_rgba(0,255,255,0.6)] hover:scale-105">
                 <Main_button text="Register.exe" />
               </div>

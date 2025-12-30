@@ -15,6 +15,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   onClick?: () => void;
   disabled?: boolean;
+  cursor?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -31,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
   fullWidth = false,
   onClick,
   disabled,
+  cursor,
 }) => {
   const sizes = {
     sm: { padding: "0.5rem 1rem", fontSize: "0.875rem" },
@@ -64,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({
         border: "none",
         background: "none",
         width: fullWidth ? "100%" : undefined,
-        cursor: disabled ? "not-allowed" : "pointer",
+        cursor: cursor || (disabled ? "not-allowed" : "pointer"),
       }}
     >
 

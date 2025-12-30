@@ -3,6 +3,7 @@
 import { useState,useEffect } from "react";
 import Link from "next/link";
 import { Audiowide } from "next/font/google";
+import { Menu, X } from "lucide-react";
 import "./navbar.css";
 import { createClient_client } from "@/utils/supabaseClient";
 
@@ -36,9 +37,9 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 z-[10000] w-full bg-black border-b border-white/50">
+      <nav className="fixed top-0 z-50 w-full backdrop-blur-md shadow-lg border-b border-white/10 bg-black/20">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center py-3">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center">
 
             <div className="hidden md:flex justify-center gap-20">
               <Link className="nav-link" href="/"><p className="text-2xl">HOME</p></Link>
@@ -46,34 +47,38 @@ export default function Navbar() {
             </div>
 
             <button
-              className="md:hidden justify-self-start text-white text-2xl"
-              onClick={() => setOpen(true)}
+              className="md:hidden justify-self-start text-white"
+              onClick={() => setOpen(!open)}
             >
-              ☰
+              <Menu className="w-6 h-6" />
             </button>
 
             <Link
               href="/"
               className={`
-                ${audiowide.className}
+                font-black
                 justify-self-center
                 bg-white text-black
-                px-6
+                px-14
                 py-1.5
                 logo
                 whitespace-nowrap
-                hover:text-cyan-400
+                hover:scale-105
                 transition
+                duration-300
+                ease-in-out
+                letter-spacing-wide
+                text-2xl
+                sm:text-5xl
               `}
-              style={{
-                fontSize: "clamp(1.1rem, 3vw, 2.4rem)",
-                letterSpacing: "0.35em",
-              }}
+              // style={{
+              //   letterSpacing: "0.20em",
+              // }}
             >
               TESSERACT
             </Link>
 
-           
+
             <div className="hidden md:flex justify-center gap-20">
               <Link className="nav-link" href="/team"><p className="text-2xl">RULES</p></Link>
               <Link className="nav-link" href="/login"><p className="text-2xl">{firstName || "SIGN-IN"}</p></Link>
@@ -82,32 +87,25 @@ export default function Navbar() {
         </div>
       </nav>
 
-     
+
       {open && (
         <div
-          className="fixed inset-0 bg-black/60 z-[9998]"
+          className="fixed inset-0 bg-black/60 z-49"
           onClick={() => setOpen(false)}
         />
       )}
 
-     
+
       <aside
         className={`
-          fixed top-0 left-0 h-full w-64
-          bg-black border-r border-white/20
-          z-[9999]
+          fixed ${open ? "top-10" : "top-0"} left-0 h-fit w-48
+          bg-black/70 border border-white/50 rounded-2xl
+          z-49
           transform transition-transform duration-300
-          ${open ? "translate-x-0" : "-translate-x-full"}
+          ${open ? "translate-y-0" : "-translate-y-full"}
         `}
       >
-        <div className="flex flex-col p-6 gap-6">
-          <button
-            className="text-white text-2xl self-end"
-            onClick={() => setOpen(false)}
-          >
-            ✕
-          </button>
-
+        <div className="flex flex-col items-center p-6 gap-6">
           <Link onClick={() => setOpen(false)} className="sidebar-link" href="/">HOME</Link>
           <Link onClick={() => setOpen(false)} className="sidebar-link" href="/team">TEAM</Link>
           <Link onClick={() => setOpen(false)} className="sidebar-link" href="/team">RULES</Link>

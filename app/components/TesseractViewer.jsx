@@ -43,7 +43,7 @@ const TesseractViewer = () => {
     backLight.position.set(-5, 5, -5);
     scene.add(backLight);
 
-    // 🔹 CORE REACTOR LIGHT (The "Inside" Brightness)
+    // CORE REACTOR LIGHT (The "Inside" Brightness)
     // Positioned at 0,0,0 to light it from within
     const coreLight = new THREE.PointLight(0x00ffff, 30, 10); // Color, Intensity, Distance
     coreLight.position.set(0, 0, 0);

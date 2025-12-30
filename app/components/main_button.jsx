@@ -91,7 +91,7 @@ export default function Main_button({ text = "REGISTER.EXE", width = 290, height
         />
      
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,255,0.05)_1px,transparent_1px)] bg-[size:100%_4px]" />
-      </div>
+      </div>  
 
  
       <span 
@@ -106,8 +106,8 @@ export default function Main_button({ text = "REGISTER.EXE", width = 290, height
       </span>
 
       
-      <div className="absolute bottom-0 left-0 w-2 h-2 bg-cyan-700 opacity-50 animate-pulse" />
-      <div className="absolute top-0 right-0 w-2 h-2 bg-cyan-700 opacity-50 animate-pulse delay-75" />
+      <div className="absolute bottom-0 left-0 w-2 h-2 bg-cyan-500 opacity-50 animate-pulse" />
+      <div className="absolute top-0 right-0 w-2 h-2 bg-cyan-500 opacity-50 animate-pulse delay-75" />
 
    
       <style jsx>{`

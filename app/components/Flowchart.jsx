@@ -17,7 +17,7 @@ const COLORS = {
 
 const GlowWrapper = ({ color, children }) => (
   <div 
-    className="transition-all duration-300 hover:scale-105"
+    className="transition-all duration-300 hover:scale-105 hover:brightness-125"
     style={{ filter: `drop-shadow(0 0 10px ${color}) drop-shadow(0 0 20px ${color}40)` }}
   >
     {children}
@@ -33,6 +33,7 @@ const DataPipe = ({
   height = "20px",
   showDot = true 
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   let d = "", viewBox = "0 0 100 20", width = "100%";
 
   if (direction === "right") { d = "M0,10 L100,10"; viewBox = "0 0 100 20"; } 
@@ -51,33 +52,35 @@ const DataPipe = ({
   }
 
   return (
-    <div className={`flex items-center justify-center relative overflow-visible ${direction === 'down' || direction === 'up' ? '' : 'w-full'}`}
-         style={{ height: direction === 'down' || direction === 'up' ? height : 'auto' }}>
-      <svg width={width} height="100%" viewBox={viewBox} preserveAspectRatio="none" className="overflow-visible">
+    <div 
+      className={`flex items-center justify-center relative overflow-visible ${direction === 'down' || direction === 'up' ? '' : 'w-full'}`}
+      style={{ height: direction === 'down' || direction === 'up' ? height : 'auto' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <svg width={width} height="100%" viewBox={viewBox} preserveAspectRatio="none" className="overflow-visible transition-all duration-300">
         <path d={d} stroke={COLORS.dim} strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" />
         <path
           d={d}
           stroke={color}
-          strokeWidth="3"
+          strokeWidth={isHovered ? "4" : "3"}
           fill="none"
           strokeDasharray="20 30"
           vectorEffect="non-scaling-stroke"
           className={active ? "opacity-100" : "opacity-20"}
           style={{
-            animation: active ? `flow-${direction} ${speed} linear infinite` : "none",
-            filter: `drop-shadow(0 0 5px ${color})`,
+            animation: active ? `flow ${isHovered ? "0.5s" : speed} linear infinite` : "none",
+            filter: `drop-shadow(0 0 ${isHovered ? "8px" : "5px"} ${color})`,
+            transition: "stroke-width 0.3s, filter 0.3s"
           }}
         />
-        {showDot && direction === "right" && <circle cx="100" cy="10" r="3" fill={color} />}
-        {showDot && direction === "left" && <circle cx="0" cy="10" r="3" fill={color} />}
-        {showDot && direction === "down" && <circle cx="10" cy="100" r="3" fill={color} />}
-        {showDot && direction === "up" && <circle cx="10" cy="0" r="3" fill={color} />}
+        {/* {showDot && direction === "right" && <circle cx="100" cy="10" r={isHovered ? "4" : "3"} fill={color} className="transition-all duration-300" />}
+        {showDot && direction === "left" && <circle cx="0" cy="10" r={isHovered ? "4" : "3"} fill={color} className="transition-all duration-300" />}
+        {showDot && direction === "down" && <circle cx="10" cy="100" r={isHovered ? "4" : "3"} fill={color} className="transition-all duration-300" />}
+        {showDot && direction === "up" && <circle cx="10" cy="0" r={isHovered ? "4" : "3"} fill={color} className="transition-all duration-300" />} */}
       </svg>
       <style jsx>{`
-        @keyframes flow-right { to { stroke-dashoffset: -50; } }
-        @keyframes flow-left { to { stroke-dashoffset: 50; } }
-        @keyframes flow-down { to { stroke-dashoffset: -50; } }
-        @keyframes flow-up { to { stroke-dashoffset: 50; } }
+        @keyframes flow { to { stroke-dashoffset: -50; } }
       `}</style>
     </div>
   );
@@ -102,6 +105,7 @@ const Flowchart = () => {
     borderColor: COLORS.cyan, 
     glowColor: COLORS.cyan, 
     fillColor: COLORS.fillCyan, 
+    cursor: "default",
     ...btnSize 
   };
 
@@ -112,36 +116,36 @@ const Flowchart = () => {
       <div className="absolute inset-0 opacity-10 pointer-events-none" 
            style={{ backgroundImage: "radial-gradient(#00ffff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
 
-      <h1 className="text-2xl md:text-5xl mb-12 lg:mb-20 text-center text-transparent bg-clip-text bg-gradient-to-b from-white to-cyan-900 font-bold tracking-widest drop-shadow-[0_0_15px_rgba(0,255,255,0.5)] px-4">
+      <h1 className="text-2xl md:text-5xl mb-12 lg:mb-20 text-center text-transparent bg-clip-text bg-white font-bold tracking-widest drop-shadow-[0_0_15px_rgba(0,255,255,0.5)] px-4">
         THE ANSWER IS THE STARTING POINT
       </h1>
 
  
       <div className="flex flex-col items-center lg:hidden">
         <GlowWrapper color={COLORS.cyan}><Button text="QUERY" {...cyanBtnProps} /></GlowWrapper>
-        <DataPipe direction="down" color={COLORS.cyan} height="40px" />
+        <DataPipe direction="down" color={COLORS.cyan} height="80px" />
 
         <GlowWrapper color={COLORS.cyan}><Button text="OBSERVE" {...cyanBtnProps} /></GlowWrapper>
-        <DataPipe direction="down" color={COLORS.cyan} height="40px" />
+        <DataPipe direction="down" color={COLORS.cyan} height="80px" />
 
         <GlowWrapper color={COLORS.cyan}><Button text="DECRYPT" {...cyanBtnProps} /></GlowWrapper>
-        <DataPipe direction="down" color={COLORS.cyan} height="40px" />
+        <DataPipe direction="down" color={COLORS.cyan} height="80px" />
 
         <GlowWrapper color={COLORS.cyan}><Button text="CODE" {...cyanBtnProps} /></GlowWrapper>
-        <DataPipe direction="down" color={COLORS.cyan} height="40px" />
+        <DataPipe direction="down" color={COLORS.cyan} height="80px" />
 
         <GlowWrapper color={COLORS.cyan}><Button text="EXE" {...cyanBtnProps} /></GlowWrapper>
-        <DataPipe direction="down" color={COLORS.green} height="40px" />
+        <DataPipe direction="down" color={COLORS.green} height="80px" />
 
         <GlowWrapper color={COLORS.green}>
-          <Button text="SUCCESS" borderColor={COLORS.green} glowColor={COLORS.green} fillColor={COLORS.fillGreen} {...btnSize} />
+          <Button text="SUCCESS" borderColor={COLORS.green} glowColor={COLORS.green} fillColor={COLORS.fillGreen} cursor="default" {...btnSize} />
         </GlowWrapper>
-        <DataPipe direction="down" color={COLORS.orange} height="40px" />
+        <DataPipe direction="down" color={COLORS.orange} height="80px" />
 
         <div className="relative group">
           <div className="absolute inset-0 blur-[40px] opacity-40 group-hover:opacity-60 transition-opacity duration-500" style={{ backgroundColor: COLORS.orange }} />
           <GlowWrapper color={COLORS.orange}>
-            <Button text="GOD_MODE" borderColor={COLORS.orange} glowColor={COLORS.orange} fillColor={COLORS.fillOrange} {...btnSize} />
+            <Button text="GOD_MODE" borderColor={COLORS.orange} glowColor={COLORS.orange} fillColor={COLORS.fillOrange} cursor="default" {...btnSize} />
           </GlowWrapper>
         </div>
       </div>
@@ -168,7 +172,7 @@ const Flowchart = () => {
            <div />
             
            
-            <div className="h-20 flex items-center">
+            <div className="h-32 flex items-center">
               <DataPipe direction="up" color={COLORS.red} speed="3s" />
             </div>
 
@@ -176,7 +180,7 @@ const Flowchart = () => {
              <div />
             <div />
 
-            <div className="h-20 flex items-center">
+            <div className="h-32 flex items-center">
               <DataPipe direction="down" color={COLORS.cyan} speed="0.8s" />
             </div>
 
@@ -184,7 +188,7 @@ const Flowchart = () => {
            <div /> <div />
             
             <GlowWrapper color={COLORS.red}>
-              <Button text="FAIL" borderColor={COLORS.red} glowColor={COLORS.red} fillColor={COLORS.fillRed} {...btnSize} />
+              <Button text="FAIL" borderColor={COLORS.red} glowColor={COLORS.red} fillColor={COLORS.fillRed} cursor="default" {...btnSize} />
             </GlowWrapper>
             
             <div className="col-span-3 w-full">
@@ -197,7 +201,7 @@ const Flowchart = () => {
 
 
            <div /><div /><div /><div /><div /><div />
-             <div className="h-20 flex items-center"><DataPipe direction="down" color={COLORS.green} speed="0.5s" /></div>
+             <div className="h-32 flex items-center"><DataPipe direction="down" color={COLORS.green} speed="0.5s" /></div>
 
 
            <div /><div /><div />
@@ -207,14 +211,14 @@ const Flowchart = () => {
             <div className="relative group">
               <div className="absolute inset-0 blur-[40px] opacity-40 group-hover:opacity-60 transition-opacity duration-500" style={{ backgroundColor: COLORS.orange }} />
               <GlowWrapper color={COLORS.orange}>
-                <Button text="GOD_MODE" borderColor={COLORS.orange} glowColor={COLORS.orange} fillColor={COLORS.fillOrange} {...btnSize} />
+                <Button text="GOD_MODE" borderColor={COLORS.orange} glowColor={COLORS.orange} fillColor={COLORS.fillOrange} cursor="default" {...btnSize} />
               </GlowWrapper>
             </div>
 
             <DataPipe direction="left" color={COLORS.orange} speed="1.5s" />
             
             <GlowWrapper color={COLORS.green}>
-              <Button text="SUCCESS" borderColor={COLORS.green} glowColor={COLORS.green} fillColor={COLORS.fillGreen} {...btnSize} />
+              <Button text="SUCCESS" borderColor={COLORS.green} glowColor={COLORS.green} fillColor={COLORS.fillGreen} cursor="default" {...btnSize} />
             </GlowWrapper>
 
           </div>

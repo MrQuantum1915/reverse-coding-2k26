@@ -13,7 +13,39 @@ const Bounty_board = () => {
         </h1>
       </div>
 
-      <div className="mt-6 sm:mt-10 mb-8 sm:mb-10 flex justify-center">
+      <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-10">
+        
+        {/* Runner Up */}
+        <div className="cursor-pointer relative transition-all duration-300 ease-out [filter:drop-shadow(0_0_20px_rgba(0,255,255,0.6))] hover:[filter:drop-shadow(0_0_50px_rgba(0,255,255,1))] hover:-translate-y-1">
+          <div
+            className="w-[220px] h-[260px] sm:w-[260px] sm:h-[300px] md:w-72 md:h-80 bg-[rgb(0,255,251)] p-0.5"
+            style={{
+              clipPath:
+                "polygon(12% 0, 100% 0, 100% 92%, 88% 100%, 0 100%, 0 8%)",
+            }}
+          >
+            <div
+              className="w-full h-full bg-[#050a14] flex flex-col items-center justify-center relative"
+              style={{
+                clipPath:
+                  "polygon(12% 0, 100% 0, 100% 92%, 88% 100%, 0 100%, 0 8%)",
+              }}
+            >
+              <h2 className="text-[rgb(0,255,255)] text-lg sm:text-xl md:text-2xl font-bold uppercase mb-4 sm:mb-6">
+                RUNNER UP
+              </h2>
+
+              <div className="flex items-center gap-1 sm:gap-2 text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-10">
+                <span className="text-white">₹</span>
+                <span className="text-white">2,700</span>
+              </div>
+
+              <div className="w-4/5 h-[3px] sm:h-[4px] bg-[rgb(0,255,251)]" />
+            </div>
+          </div>
+        </div>
+
+        {/* Champion */}
         <div className="cursor-pointer relative transition-all duration-300 ease-out [filter:drop-shadow(0_0_20px_rgba(255,138,0,0.6))] hover:[filter:drop-shadow(0_0_50px_rgba(255,138,0,1))] hover:-translate-y-1">
           <div
             className="w-[220px] h-[260px] sm:w-[260px] sm:h-[300px] md:w-72 md:h-80 bg-[#FF8A00] p-0.5"
@@ -48,43 +80,8 @@ const Bounty_board = () => {
             </div>
           </div>
         </div>
-      </div>
 
-   
-      <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 sm:gap-10 mx-auto max-w-full md:max-w-[50%]">
-        
-
-        <div className="cursor-pointer relative transition-all duration-300 ease-out [filter:drop-shadow(0_0_20px_rgba(0,255,255,0.6))] hover:[filter:drop-shadow(0_0_50px_rgba(0,255,255,1))] hover:-translate-y-1">
-          <div
-            className="w-[220px] h-[260px] sm:w-[260px] sm:h-[300px] md:w-72 md:h-80 bg-[rgb(0,255,251)] p-0.5"
-            style={{
-              clipPath:
-                "polygon(12% 0, 100% 0, 100% 92%, 88% 100%, 0 100%, 0 8%)",
-            }}
-          >
-            <div
-              className="w-full h-full bg-[#050a14] flex flex-col items-center justify-center relative"
-              style={{
-                clipPath:
-                  "polygon(12% 0, 100% 0, 100% 92%, 88% 100%, 0 100%, 0 8%)",
-              }}
-            >
-              <h2 className="text-[rgb(0,255,255)] text-lg sm:text-xl md:text-2xl font-bold uppercase mb-4 sm:mb-6">
-                RUNNER UP
-              </h2>
-
-              <div className="flex items-center gap-1 sm:gap-2 text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-10">
-                <span className="text-white">₹</span>
-                <span className="text-white">2,700</span>
-              </div>
-
-              <div className="w-4/5 h-[3px] sm:h-[4px] bg-[rgb(0,255,251)]" />
-            </div>
-          </div>
-        </div>
-
-      
-      
+        {/* Special Ops */}
         <div className="cursor-pointer relative transition-all duration-300 ease-out [filter:drop-shadow(0_0_20px_rgba(166,0,255,0.6))] hover:[filter:drop-shadow(0_0_50px_rgba(166,0,255,1))] hover:-translate-y-1">
           <div
             className="w-[220px] h-[260px] sm:w-[260px] sm:h-[300px] md:w-72 md:h-80 bg-[rgb(166,0,255)] p-0.5"
@@ -105,7 +102,7 @@ const Bounty_board = () => {
               </h2>
 
               <div className="text-white text-center text-sm sm:text-lg md:text-xl">
-                ₹2,700 (IIITV)
+                ₹2,300 (IIITV)
                 <br />
                 ₹1,700 (IIITV FY)
               </div>
@@ -114,6 +111,7 @@ const Bounty_board = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
