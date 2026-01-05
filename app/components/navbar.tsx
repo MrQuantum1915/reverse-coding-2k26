@@ -60,7 +60,7 @@ export default function Navbar() {
 
             <div className="hidden md:flex justify-center gap-20">
               <Link className="nav-link" href="/team"><p className="text-2xl">RULES</p></Link>
-              <Link className="nav-link" href="/login"><p className="text-2xl">SIGN-IN</p></Link>
+              <Link className="nav-link" href="/sandbox"><p className="text-2xl">SANDBOX</p></Link>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function Navbar() {
           <Link onClick={() => setOpen(false)} className="sidebar-link" href="/">HOME</Link>
           <Link onClick={() => setOpen(false)} className="sidebar-link" href="/team">TEAM</Link>
           <Link onClick={() => setOpen(false)} className="sidebar-link" href="/team">RULES</Link>
-          <Link onClick={() => setOpen(false)} className="sidebar-link" href="/login">SIGN IN</Link>
+          <Link onClick={() => setOpen(false)} className="sidebar-link" href="/sandbox">SANDBOX</Link>
         </div>
       </aside>
     </>

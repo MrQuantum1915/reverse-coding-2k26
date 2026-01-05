@@ -1,7 +1,9 @@
 
 function page() {
   return (
-    <div>page</div>
+    <div className="text-4xl text-center w-full my-80">
+      Coming Soon...
+    </div>
   )
 }
 
