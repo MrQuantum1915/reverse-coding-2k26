@@ -1,16 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Orbitron } from "next/font/google";
+import './preloader.css';
 
 const orbitron = Orbitron({ subsets: ["latin"] });
 
 const HACKER_TEXTS = [
-  "INITIALIZING HYPER-CUBE...",
-  "DECRYPTING NEURAL PATHWAYS...",
-  "SYCHRONIZING QUANTUM STATES...",
-  "COMPILING REALITY ENGINE...",
-  "BREACHING FIREWALL...",
-  "ACCESS GRANTED."
+  "SYSTEM BOOT SEQUENCE INITIATED...",
+  "LOADING SYSTEM MODULES...",
+  "VERIFYING SECURITY CHECKSUMS...",
+  "ALLOCATING MEMORY BUFFERS...",
+  "ESTABLISHING NETWORK CONNECTIONS...",
+  "SYSTEM READY."
 ];
 
 export default function Preloader() {
@@ -19,6 +20,7 @@ export default function Preloader() {
   const [textIndex, setTextIndex] = useState(0);
 
   useEffect(() => {
+    // smooth progress
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -26,9 +28,10 @@ export default function Preloader() {
           setTimeout(() => setVisible(false), 800);
           return 100;
         }
-        return Math.min(prev + Math.floor(Math.random() * 15) + 5, 100);
+        const increment = Math.random() > 0.7 ? Math.floor(Math.random() * 10) + 2 : 1;
+        return Math.min(prev + increment, 100);
       });
-    }, 150);
+    }, 80);
     return () => clearInterval(interval);
   }, []);
 
@@ -43,113 +46,56 @@ export default function Preloader() {
   if (!visible) return null;
 
   return (
-    <div className={`fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-all duration-1000 ${progress === 100 ? "opacity-0 scale-150 pointer-events-none" : "opacity-100 scale-100"}`}>
-      
-      <div className="cube-wrapper">
-        <div className="cube">
-          <div className="face front" />
-          <div className="face back" />
-          <div className="face right" />
-          <div className="face left" />
-          <div className="face top" />
-          <div className="face bottom" />
-          
-          <div className="inner-cube">
-             <div className="face front" />
-             <div className="face back" />
-             <div className="face right" />
-             <div className="face left" />
-             <div className="face top" />
-             <div className="face bottom" />
-          </div>
+    <div
+      className={`fixed inset-0 z-[100] bg-black/95 flex flex-col gap-8 items-center justify-center transition-all duration-700 ${progress === 100 ? "opacity-0 pointer-events-none blur-xl scale-110" : "opacity-100 backdrop-blur-3xl"
+        }`}
+    >
+
+      <div className="relative flex items-center justify-center mb-12">
+
+        <div className="absolute w-64 h-64 border border-cyan-500/30 rounded-full animate-[spin_10s_linear_infinite]" />
+        <div className="absolute w-64 h-64 border-t-2 border-cyan-500 rounded-full animate-[spin_3s_linear_infinite]" />
+
+        <div className="absolute w-48 h-48 border border-purple-500/30 rounded-full animate-[spin_8s_linear_infinite_reverse]" />
+        <div className="absolute w-48 h-48 border-b-2 border-purple-500 rounded-full animate-[spin_4s_linear_infinite_reverse]" />
+
+        <div className="absolute w-32 h-32 border border-cyan-500/20 rounded-full dashed-border animate-[spin_12s_linear_infinite]" />
+
+        <div className="relative z-10 flex flex-col items-center justify-center w-24 h-24 bg-black rounded-full border border-cyan-500/50 shadow-[0_0_30px_rgba(0,255,255,0.2)]">
+          <span className={`${orbitron.className} text-xl font-bold text-white`}>
+            {progress}%
+          </span>
         </div>
       </div>
 
-      <div className="mt-20 relative z-10 text-center">
-        <h1 className={`${orbitron.className} text-6xl font-black text-white tracking-widest drop-shadow-[0_0_15px_#00ffff]`}>
-          {progress}%
-        </h1>
-        <p className={`${orbitron.className} mt-2 text-cyan-400 text-sm tracking-[0.4em] animate-pulse`}>
-          {HACKER_TEXTS[textIndex]}
+      <div className="relative z-10 h-8 mt-4 overflow-hidden text-center">
+        <p className={`${orbitron.className} text-cyan-400 text-sm tracking-[0.2em] animate-pulse`}>
+          {`> ${HACKER_TEXTS[textIndex]}`}
         </p>
       </div>
 
-      <div className="absolute bottom-10 w-full max-w-md h-1 bg-gray-900 overflow-hidden">
+      <div className="mt-8 w-96 max-w-[80vw] h-6 border-2 border-cyan-500/50 bg-black/80 skew-x-[-20deg] p-[2px] relative shadow-[0_0_20px_rgba(0,255,255,0.2)]">
+        <div className="absolute inset-0 flex justify-between px-1 opacity-20">
+          {[...Array(12)].map((_, i) => (
+             <div key={i} className="w-[1px] h-full bg-cyan-400" />
+          ))}
+        </div>
+        
         <div 
-          className="h-full bg-cyan-500 shadow-[0_0_20px_#00ffff]"
-          style={{ width: `${progress}%`, transition: 'width 0.2s ease-out' }}
-        />
+          className="h-full relative overflow-hidden bg-cyan-500/10"
+          style={{ width: `${progress}%`, transition: 'width 0.1s linear' }}
+        >
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-cyan-400 to-cyan-300" />
+            
+            <div className="absolute inset-0 progress-bar-stripes" />
+
+            <div className="absolute right-0 top-0 h-full w-[4px] bg-white blur-[1px] shadow-[0_0_10px_#fff] z-10" />
+        </div>
       </div>
 
-      <style jsx>{`
-        .cube-wrapper {
-          perspective: 800px;
-          width: 100px;
-          height: 100px;
-          position: relative;
-        }
-
-        .cube {
-          width: 100%;
-          height: 100%;
-          position: relative;
-          transform-style: preserve-3d;
-          animation: spin-cube 4s infinite linear;
-        }
-
-        /* OUTER CUBE FACES */
-        .face {
-          position: absolute;
-          width: 100px;
-          height: 100px;
-          border: 2px solid #00ffff;
-          background: rgba(0, 255, 255, 0.1);
-          box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-        }
-
-        .front  { transform: rotateY(0deg) translateZ(50px); }
-        .back   { transform: rotateY(180deg) translateZ(50px); }
-        .right  { transform: rotateY(90deg) translateZ(50px); }
-        .left   { transform: rotateY(-90deg) translateZ(50px); }
-        .top    { transform: rotateX(90deg) translateZ(50px); }
-        .bottom { transform: rotateX(-90deg) translateZ(50px); }
-
-        /* INNER CORE CUBE (Smaller & Faster) */
-        .inner-cube {
-          width: 50px;
-          height: 50px;
-          position: absolute;
-          top: 25px;
-          left: 25px;
-          transform-style: preserve-3d;
-          animation: spin-cube-reverse 2s infinite linear;
-        }
-
-        .inner-cube .face {
-          width: 50px;
-          height: 50px;
-          border: 2px solid #ff00ff; /* Magenta Core */
-          background: rgba(255, 0, 255, 0.3);
-          box-shadow: 0 0 20px #ff00ff;
-        }
-
-        .inner-cube .front  { transform: rotateY(0deg) translateZ(25px); }
-        .inner-cube .back   { transform: rotateY(180deg) translateZ(25px); }
-        .inner-cube .right  { transform: rotateY(90deg) translateZ(25px); }
-        .inner-cube .left   { transform: rotateY(-90deg) translateZ(25px); }
-        .inner-cube .top    { transform: rotateX(90deg) translateZ(25px); }
-        .inner-cube .bottom { transform: rotateX(-90deg) translateZ(25px); }
-
-        @keyframes spin-cube {
-          0% { transform: rotateX(0deg) rotateY(0deg); }
-          100% { transform: rotateX(360deg) rotateY(360deg); }
-        }
-
-        @keyframes spin-cube-reverse {
-          0% { transform: rotateX(360deg) rotateY(360deg); }
-          100% { transform: rotateX(0deg) rotateY(0deg); }
-        }
-      `}</style>
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20">
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-cyan-500/50 animate-scanline" />
+      </div>
     </div>
   );
 }

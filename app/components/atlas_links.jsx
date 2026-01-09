@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
+import { redirect } from "next/navigation";
 
 const NAV_ITEMS = [
   { id: "sandbox", name: "SandBox", pos: "top", path: "M 50 100 L 50 0", m_path: "M 50 0 L 50 40" },
@@ -57,7 +58,9 @@ const NavBranch = ({ item, activeId, onHover }) => {
       </div>
 
 
-      <div className={`
+      <div 
+      onClick={() => redirect(`/${item.id}`)}
+      className={`
         relative px-6 py-2 border transition-all duration-500 bg-black z-10
         ${isHovered
           ? 'border-[rgb(0,255,251)] text-[rgb(0,255,251)] shadow-[0_0_20px_rgba(0,255,251,0.3)] scale-110'
