@@ -273,6 +273,7 @@ export default function Page() {
             <div className="text-xl font-semibold">OR</div>
             <button
               disabled={editMode}
+              onClick={logout}
               className={`w-full py-2 rounded border ${
                 editMode
                   ? "opacity-50 cursor-not-allowed"
