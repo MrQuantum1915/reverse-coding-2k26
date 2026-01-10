@@ -81,7 +81,7 @@ export default function Navbar() {
 
             <div className="hidden md:flex justify-center gap-20">
               <Link className="nav-link" href="/team"><p className="text-2xl">RULES</p></Link>
-              <Link className="nav-link" href="/sandbox"><p className="text-2xl">{firstName || "SANDBOX"}</p></Link>
+              <Link className="nav-link" href="/sandbox"><p className="text-2xl">{ "SANDBOX"}</p></Link>
             </div>
           </div>
         </div>
