@@ -30,6 +30,5 @@ export async function GET(request: NextRequest) {
     // no redirect here
   }
 
-  // ✅ SINGLE, FINAL REDIRECT
   return NextResponse.redirect(`${origin}/login`);
 }

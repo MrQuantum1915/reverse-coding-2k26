@@ -21,12 +21,14 @@ This challenges participants to think critically, recognize patterns, and demons
 
 - The main thing is that participant should not get the **code** behind the black box in any case. So I used this architecture:
 
+- The live leaderboard architecture:
+   -  "Whole Function" Memoization: Utilizes Next.js 15's `use cache` to memoize the entire aggregation pipeline (Codeforces API + Supabase DB + Merge Logic), reducing database load to zero during high-traffic refreshes.
 
-
+   - Serverless-Safe Rate Limiting: Implements a custom 10s cacheLife profile to act as a statistical buffer against Vercel's concurrent instance scaling, ensuring zero risk of hitting Codeforces' strict API limits.
 
 ## Tech Stack
 
-Design (by @MrQuantum1915): [Figma](https://www.figma.com/site/lJRYGJ69cRKp5DLjasc3ft/Website?node-id=0-1&t=noOlhMHRDrxEjRDG-1)
+Design (by [@MrQuantum1915](https://github.com/MrQuantum1915)): [Figma](https://www.figma.com/site/lJRYGJ69cRKp5DLjasc3ft/Website?node-id=0-1&t=noOlhMHRDrxEjRDG-1)
 
 Framework: [Next.js](https://nextjs.org/) 14+ (App Router)
 
@@ -66,6 +68,8 @@ pnpm install
 
 ```bash
 npm run dev
+#or
+pnpm dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) to view the application.
@@ -112,6 +116,8 @@ Run Build command before submitting pull request
 
 ```bash
 npm run build
+#or
+pnpm build
 ```
 
 ## License
