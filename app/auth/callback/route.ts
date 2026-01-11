@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/auth/error`);
   }
 
-  // ✅ OPTIONAL: profile check (does NOT affect redirect)
+  
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -30,6 +30,5 @@ export async function GET(request: NextRequest) {
     // no redirect here
   }
 
-  // ✅ SINGLE, FINAL REDIRECT
-  return NextResponse.redirect(`${origin}/`);
+  return NextResponse.redirect(`${origin}/login`);
 }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Orbitron } from "next/font/google";
+import { redirect } from "next/navigation";
 
 const orbitron = Orbitron({ subsets: ["latin"] });
 
@@ -43,7 +44,10 @@ export default function Main_button({ text = "REGISTER.EXE", width = 290, height
   const handleInteraction = () => {
     setActive(true);
     scramble(); 
-    setTimeout(() => setActive(false), 200); 
+    setTimeout(() => setActive(false), 200);
+    setTimeout(() => {
+      redirect("/login");
+    }, 300);
   };
 
   return (
