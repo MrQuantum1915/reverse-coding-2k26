@@ -6,7 +6,7 @@ import { cacheLife, cacheTag } from "next/cache";
 
 async function fetchStandings() {
 
-    cacheLife({ revalidate: 3600 });
+    cacheLife('cfsafe');
     cacheTag('standings');
 
     // from cf
