@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/components/Flowchart.jsx", "app/components/atlas_socials.tsx", "app/components/GlitchText.jsx"  ],
+, "app/components/Flowchart.jsx", "app/components/atlas_socials.tsx", "app/components/GlitchText.jsx", "app/team/page.jsx"  ],
   "exclude": ["node_modules"]
 }
