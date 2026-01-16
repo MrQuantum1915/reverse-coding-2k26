@@ -176,18 +176,18 @@ export default function Home() {
             <div className="space-y-2 sm:space-y-3 text-center md:text-left">
               <FadeIn delay={0.2}>
                 <p className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-light uppercase tracking-[0.18em] text-white">
-                  17th January, 2026
+                  1 February, 2026
                 </p>
               </FadeIn>
 
               <FadeIn delay={0.2}>
                 <p className="text-base sm:text-xl md:text-3xl lg:text-4xl font-light uppercase tracking-[0.22em] text-white">
-                  Saturday
+                  Sunday
                 </p>
               </FadeIn>
 
               <p className="text-base sm:text-xl md:text-3xl lg:text-4xl font-light uppercase tracking-[0.2em] text-white">
-                20:00 - 23:00 IST
+                2:00 - 5:00 PM IST
               </p>
             </div>
 
