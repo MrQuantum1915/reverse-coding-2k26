@@ -7,7 +7,7 @@ const orbitron = Orbitron({ subsets: ["latin"] });
 
 const GLITCH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@&[]/\\";
 
-export default function Main_button({ text = "REGISTER.EXE", width = 290, height = 80 }) {
+export default function Main_button({ text = "REGISTER.EXE", width = 290, height = 80 ,onClick="/login"}) {
   const [displayText, setDisplayText] = useState(text);
   const [active, setActive] = useState(false);
   const intervalRef = useRef(null);
@@ -55,7 +55,9 @@ export default function Main_button({ text = "REGISTER.EXE", width = 290, height
     scramble(); 
     setTimeout(() => setActive(false), 200);
     setTimeout(() => {
-      redirect("/login");
+      if(onClick!==""){
+          redirect(onClick);
+      }
     }, 300);
   };
 
