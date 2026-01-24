@@ -110,6 +110,14 @@ export const prTeam = [
     instagram: instagramHelper("Arpit_maheshwari_07"),
   },
   {
+    name: "Krishna Yadav",
+    photo: getLocalPhoto("krishna.jpeg"),
+    linkedin: linkedinHelper(
+      "https://www.linkedin.com/in/krishna-yadav-86964b32a"
+    ),
+    instagram: instagramHelper("_.krishna__yadav._"),
+  },
+  {
     name: "Kartavya Kataria",
     photo: getLocalPhoto("Kartavya.png"),
     linkedin: linkedinHelper(
