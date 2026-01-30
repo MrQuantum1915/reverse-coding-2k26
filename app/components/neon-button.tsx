@@ -46,9 +46,11 @@ const Button: React.FC<ButtonProps> = ({
   const format = (v?: string | number) =>
     typeof v === "number" ? `${v}px` : v;
 
-  const computedFontSize = height
-    ? `calc(${format(height)} * 0.40)`
-    : sizes[size].fontSize;
+  const computedFontSize = (height && typeof height === 'string' && height.includes('%')) 
+    ? sizes[size].fontSize 
+    : height
+      ? `calc(${format(height)} * 0.40)`
+      : sizes[size].fontSize;
 
   const glow = disabled
     ? "none"
@@ -88,8 +90,8 @@ const Button: React.FC<ButtonProps> = ({
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          width: format(width) || (fullWidth ? "100%" : undefined),
-          height: format(height),
+          width: format(width) || (fullWidth ? `calc(100% - ${strokeWidth * 2}px)` : undefined),
+          height: height ? (typeof height === 'string' && height.includes('%') ? `calc(100% - ${strokeWidth * 2}px)` : `calc(${format(height)} - ${strokeWidth * 2}px)`) : undefined,
           padding: height ? 0 : sizes[size].padding,
           fontSize: computedFontSize,
           lineHeight: 1,

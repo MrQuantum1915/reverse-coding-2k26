@@ -5,6 +5,7 @@ import './globals.css';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import SmoothScroll from './components/SmoothScroll';
+import ConditionalFooter from './components/conditional-footer';
 
 export const metadata = {
     title: 'Tesseract',
@@ -22,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <SmoothScroll />
                 <Navbar />
                 {children}
-                <Footer />
+                <ConditionalFooter />
                 <Analytics />
                 <SpeedInsights />
             </body>
