@@ -1,0 +1,71 @@
+{
+    "modules": [
+        {
+            "id": "1",
+            "name": "Package Version",
+            "difficulty": "MEDIUM",
+            "status": "SOLVED",
+            "objective": "Comparative logic engaged. Determine the precedence hierarchy.",
+            "constraints": {
+                "Input Type": "2 Space Seperated Strings containing only digits and dots",
+                "Output Type": "String",
+                "Input Length": "[1, 1e5]",
+                "Time Limit": "1 second",
+                "Memory Limit": "256 MB"
+            },
+            "intel": "Try : 1.0.0 1.0.2"
+        },
+        {
+            "id": "2",
+            "name": "MODULE_02",
+            "difficulty": "HARD",
+            "status": "ACTIVE",
+            "objective": "Signal obfuscation detected. Reconstruct the transformation matrix.",
+            "constraints": {
+                "Input Size": "Array[N]",
+                "Element Range": "[0, 255]",
+                "Time Limit": "500ms"
+            },
+            "intel": "Mapping appears consistent."
+        },
+        {
+            "id": "3",
+            "name": "MODULE_03",
+            "difficulty": "HARD",
+            "status": "ACTIVE",
+            "objective": "Signal obfuscation detected. Reconstruct the transformation matrix.",
+            "constraints": {
+                "Input Size": "Array[N]",
+                "Element Range": "[0, 255]",
+                "Time Limit": "500ms"
+            },
+            "intel": "Mapping appears consistent."
+        },
+        {
+            "id": "4",
+            "name": "MODULE_04",
+            "difficulty": "HARD",
+            "status": "ACTIVE",
+            "objective": "Signal obfuscation detected. Reconstruct the transformation matrix.",
+            "constraints": {
+                "Input Size": "Array[N]",
+                "Element Range": "[0, 255]",
+                "Time Limit": "500ms"
+            },
+            "intel": "Mapping appears consistent."
+        },
+        {
+            "id": "5",
+            "name": "MODULE_05",
+            "difficulty": "HARD",
+            "status": "ACTIVE",
+            "objective": "Signal obfuscation detected. Reconstruct the transformation matrix.",
+            "constraints": {
+                "Input Size": "Array[N]",
+                "Element Range": "[0, 255]",
+                "Time Limit": "500ms"
+            },
+            "intel": "Mapping appears consistent."
+        }
+    ]
+}

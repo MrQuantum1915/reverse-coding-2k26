@@ -1,6 +1,6 @@
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
-import { Orbitron } from 'next/font/google';
+// import { SpeedInsights } from '@vercel/speed-insights/next';
+// import { Analytics } from '@vercel/analytics/next';
+import { Orbitron, Fira_Code } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
@@ -14,18 +14,24 @@ export const metadata = {
 
 const orbitron = Orbitron({
     subsets: ['latin'],
+    variable: '--font-orbitron',
+})
+
+const firaCode = Fira_Code({
+    subsets: ['latin'],
+    variable: '--font-fira-code',
 })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={`${orbitron.className} bg-black text-white w-full min-h-screen`}>
+            <body className={`${orbitron.className} ${orbitron.variable} ${firaCode.variable} bg-black text-white w-full min-h-screen`}>
                 <SmoothScroll />
                 <Navbar />
                 {children}
                 <ConditionalFooter />
-                <Analytics />
-                <SpeedInsights />
+                {/* <Analytics />
+                <SpeedInsights /> */}
             </body>
         </html>
     );

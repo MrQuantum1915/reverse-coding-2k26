@@ -30,6 +30,13 @@ export default function Page() {
   const [profileExists, setProfileExists] = useState(false);
   const [profileLoading, setprofileloading] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+  const setUserCookies = (data: any) => {
+    document.cookie = `name=${data.name}; path=/; max-age=31536000`;
+    document.cookie = `institute=${data.institute}; path=/; max-age=31536000`;
+    document.cookie = `codeforces_id=${data.codeforces_id}; path=/; max-age=31536000`;
+  };
+
   useEffect(() => {
     const getSession = async () => {
       const {
@@ -69,6 +76,7 @@ export default function Page() {
         codeforces_id: data.codeforces_id || "",
       });
       setProfileExists(true);
+      setUserCookies(data);
     }
     setLoading(false);
   };
@@ -108,6 +116,7 @@ export default function Page() {
     if (error) {
       alert(error.message);
     } else {
+      setUserCookies(form);
       setProfileExists(true);
       setEditMode(false);
       alert("Registration successful!");
@@ -134,6 +143,7 @@ export default function Page() {
     if (error) {
       alert(error.message);
     } else {
+      setUserCookies(form);
       setProfileExists(true);
       setEditMode(false);
     }
