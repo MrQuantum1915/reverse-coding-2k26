@@ -17,12 +17,12 @@ async function fetchStandings() {
 
     // fetch ALL user's data from DB
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: allUsersData, error } = await supabase
         .from('profiles')
-        .select('name, institute, codeforces_id');
+        .select('id, name, institute, codeforces_id');
 
     if (error) {
         console.log('Error fetching users data from DB: ', error.message);
@@ -31,6 +31,7 @@ async function fetchStandings() {
 
     // rank, name, institute, cfhandle, 
     const standings = [];
+    const dbUpdates = [];
     for (const ranklistRow of rawData.result.rows) {
         const participantType = ranklistRow.party.participantType;
         if (participantType === 'CONTESTANT') {
@@ -41,6 +42,21 @@ async function fetchStandings() {
             const problemsSolved = ranklistRow.problemResults.filter((pr: any) => pr.points > 0).length;
 
             const userData = allUsersData.find(user => user.codeforces_id === cfHandle);
+
+            if (userData) {
+                const questions_status: Record<string, string> = {};
+                ranklistRow.problemResults.forEach((pr: any, index: number) => {
+                    if (pr.points > 0) {
+                        questions_status[(index + 1).toString()] = "SOLVED";
+                    }
+                });
+
+                dbUpdates.push(
+                    supabase.from('profiles')
+                        .update({ questions_status })
+                        .eq('id', userData.id)
+                );
+            }
 
             standings.push({
                 rank,
@@ -53,6 +69,8 @@ async function fetchStandings() {
             });
         }
     }
+
+    await Promise.all(dbUpdates);
 
     standings.sort((a, b) => a.rank - b.rank);
     return standings;
