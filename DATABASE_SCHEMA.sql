@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS problems (
     cf_contest_id TEXT,
     cf_index TEXT,
     
-    -- Oracle/Black box function (stored securely)
-    blackbox_script TEXT,
+    -- NOTE: blackbox_script moved to separate 'problem_scripts' table for security
+    -- The script is only accessible via service role (server-side actions)
     
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -120,7 +120,30 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 
 
 -- =====================================================
--- 5. SUBMISSIONS LOG (Optional - for analytics)
+-- 5. PROBLEM SCRIPTS (Secure - Separate from Problems)
+-- Stores blackbox scripts with restricted access
+-- Only accessible via service role (server-side actions)
+-- =====================================================
+CREATE TABLE IF NOT EXISTS problem_scripts (
+    id SERIAL PRIMARY KEY,
+    problem_id INT UNIQUE REFERENCES problems(id) ON DELETE CASCADE,
+    blackbox_script TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Index for fast lookups by problem_id
+CREATE INDEX IF NOT EXISTS idx_problem_scripts_problem_id ON problem_scripts(problem_id);
+
+-- Trigger for updated_at
+CREATE TRIGGER update_problem_scripts_updated_at
+    BEFORE UPDATE ON problem_scripts
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+
+-- =====================================================
+-- 6. SUBMISSIONS LOG (Optional - for analytics)
 -- =====================================================
 CREATE TABLE IF NOT EXISTS submissions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -134,7 +157,7 @@ CREATE TABLE IF NOT EXISTS submissions (
 
 
 -- =====================================================
--- 6. ROW LEVEL SECURITY (RLS) POLICIES
+-- 7. ROW LEVEL SECURITY (RLS) POLICIES
 -- =====================================================
 
 -- Enable RLS
@@ -142,6 +165,15 @@ ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE problems ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contest_config ENABLE ROW LEVEL SECURITY;
 ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE problem_scripts ENABLE ROW LEVEL SECURITY;
+
+
+
+-- =====================================================
+-- 7.5 COLUMN-LEVEL SECURITY
+-- =====================================================
+
+
 
 -- Profiles: Users can read/update their own profile
 CREATE POLICY "Users can view own profile"
@@ -199,9 +231,53 @@ CREATE POLICY "Participants see ACTIVE problems during contest"
         )
     );
 
+-- Problem Scripts: ONLY service role can access (no client-side access)
+-- This ensures blackbox scripts are never exposed to users
+-- Server actions use supabaseServer with service role key which bypasses RLS
+
+CREATE POLICY "Only admins can view scripts (for admin panel)"
+    ON problem_scripts FOR SELECT
+    USING (
+        EXISTS (
+            SELECT 1 FROM profiles 
+            WHERE profiles.id = auth.uid() 
+            AND profiles.role = 'admin'
+        )
+    );
+
+CREATE POLICY "Only admins can insert scripts"
+    ON problem_scripts FOR INSERT
+    WITH CHECK (
+        EXISTS (
+            SELECT 1 FROM profiles 
+            WHERE profiles.id = auth.uid() 
+            AND profiles.role = 'admin'
+        )
+    );
+
+CREATE POLICY "Only admins can update scripts"
+    ON problem_scripts FOR UPDATE
+    USING (
+        EXISTS (
+            SELECT 1 FROM profiles 
+            WHERE profiles.id = auth.uid() 
+            AND profiles.role = 'admin'
+        )
+    );
+
+CREATE POLICY "Only admins can delete scripts"
+    ON problem_scripts FOR DELETE
+    USING (
+        EXISTS (
+            SELECT 1 FROM profiles 
+            WHERE profiles.id = auth.uid() 
+            AND profiles.role = 'admin'
+        )
+    );
+
 
 -- =====================================================
--- 7. HELPER FUNCTIONS
+-- 8. HELPER FUNCTIONS
 -- =====================================================
 
 -- Function to check if contest is live
@@ -255,7 +331,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 
 -- =====================================================
--- 8. SAMPLE DATA FOR TESTING
+-- 9. SAMPLE DATA FOR TESTING
 -- =====================================================
 
 -- Set yourself as admin (replace with your user ID from auth.users)
@@ -305,4 +381,21 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 --   - ACTIVE + PRACTICE problems visible for review
 --   - Black box still works (for learning)
 --   - Or end manually: UPDATE contest_config SET end_time = NOW() WHERE id = 1;
+-- =====================================================
+
+
+-- =====================================================
+-- MIGRATION: Move blackbox_script to problem_scripts
+-- Run this ONCE if you have existing data in problems.blackbox_script
+-- =====================================================
+-- 
+-- Step 1: Migrate existing scripts to new table
+-- INSERT INTO problem_scripts (problem_id, blackbox_script)
+-- SELECT id, blackbox_script 
+-- FROM problems 
+-- WHERE blackbox_script IS NOT NULL;
+--
+-- Step 2: Drop the old column (AFTER verifying migration)
+-- ALTER TABLE problems DROP COLUMN IF EXISTS blackbox_script;
+--
 -- =====================================================

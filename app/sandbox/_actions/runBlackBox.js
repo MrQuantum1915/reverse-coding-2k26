@@ -36,11 +36,11 @@ export async function runBlackBox(input, problemId) {
     let script = globalScriptCache.get(problemId);
     if (!script) {
         console.log(`Cache miss for problem ${problemId}, fetching from DB.`);
-        //fetch from DB
+        //fetch from DB separate problem_scripts table for security
         const { data, error } = await supabase
-            .from('problems')
+            .from('problem_scripts')
             .select('blackbox_script')
-            .eq('id', problemId)
+            .eq('problem_id', problemId)
             .single();
 
         if (error || !data?.blackbox_script) {
