@@ -80,18 +80,18 @@ export default function Page() {
 
       <div className="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(to_right,#22d3ee_1px,transparent_1px),linear-gradient(to_bottom,#22d3ee_1px,transparent_1px)] bg-size-[40px_40px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0" />
 
-      <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto p-2 md:p-4 h-full">
+      <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto p-1 sm:p-2 md:p-4 h-full">
 
-        <header className="flex flex-col md:flex-row justify-between items-center gap-4 pb-4 bg-black/40 backdrop-blur-sm">
-          <div className="flex items-center gap-6">
+        <header className="flex flex-col md:flex-row justify-between items-center gap-4 pb-2 sm:pb-4 bg-black/40 backdrop-blur-sm">
+          <div className="flex items-center gap-3 sm:gap-6">
             <div className="p-3 border border-orange-500/50 bg-orange-950/10">
               <Trophy size={32} className="text-orange-500" />
             </div>
             <div>
-              <h1 className={`${orbitron.className} text-xl md:text-2xl font-black text-orange-400 tracking-wider`}>
+              <h1 className={`${orbitron.className} text-lg sm:text-xl md:text-2xl font-black text-orange-400 tracking-wider`}>
                 LEADERBOARD
               </h1>
-              <div className="flex items-center gap-3 mt-2 text-sm text-cyan-400 font-bold tracking-widest uppercase">
+              <div className="flex items-center gap-2 sm:gap-3 mt-2 text-xs sm:text-sm text-cyan-400 font-bold tracking-widest uppercase">
                 <span className="flex items-center gap-1.5">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400"></span>  
@@ -126,13 +126,12 @@ export default function Page() {
         </header>
 
         <div className="flex-1 border border-cyan-400/50 bg-black/60 backdrop-blur-md  overflow-hidden flex flex-col shadow-[0_0_30px_rgba(34,211,238,0.1)]">
-          <div className="grid grid-cols-12 gap-4 px-4 py-3 border-b border-cyan-400/50 bg-cyan-950/20 text-sm font-bold tracking-widest text-cyan-100 uppercase sticky top-0 z-20">
-            <div className="col-span-1 md:col-span-1 flex items-center gap-2"><Hash size={14} className="text-cyan-400" /> Rank</div>
-            <div className="col-span-4 md:col-span-4 flex items-center gap-2"><User size={14} className="text-cyan-400" /> Agent / Institute</div>
-            {/* <div className="col-span-3 hidden md:flex items-center gap-2"><School size={14} className="text-cyan-400"/> Institute</div> */}
-            <div className="col-span-2 md:col-span-2 hidden md:flex items-center gap-2 text-center justify-center"><Terminal size={14} className="text-cyan-400" /> Handle</div>
-            <div className="col-span-2 md:col-span-2 text-center flex items-center justify-center gap-2"><Activity size={14} className="text-green-500" /> Solved</div>
-            <div className="col-span-3 md:col-span-3 text-right flex items-center justify-end gap-2"><Trophy size={14} className="text-orange-500" /> Points</div>
+          <div className="grid grid-cols-6 sm:grid-cols-12 gap-2 sm:gap-4 px-2 sm:px-4 py-2 sm:py-3 border-b border-cyan-400/50 bg-cyan-950/20 text-xs sm:text-sm font-bold tracking-widest text-cyan-100 uppercase sticky top-0 z-20">
+            <div className="col-span-1 flex items-center gap-1 sm:gap-2"><Hash size={14} className="text-cyan-400" /> Rank</div>
+            <div className="col-span-3 sm:col-span-4 flex items-center gap-1 sm:gap-2"><User size={14} className="text-cyan-400" /> Agent / Institute</div>
+            <div className="col-span-2 hidden sm:col-span-2 sm:flex items-center gap-2 text-center justify-center"><Terminal size={14} className="text-cyan-400" /> Handle</div>
+            <div className="col-span-2 text-center flex items-center justify-center gap-1 sm:gap-2"><Activity size={14} className="text-green-500" /> Solved</div>
+            <div className="col-span-2 sm:col-span-3 text-right flex items-center justify-end gap-1 sm:gap-2"><Trophy size={14} className="text-orange-500" /> Points</div>
           </div>
 
           <div data-lenis-prevent className="overflow-y-auto cyber-scrollbar  flex-1 relative">
@@ -146,47 +145,47 @@ export default function Page() {
                 {data.map((row) => (
                   <div
                     key={row.cfHandle}
-                    className={`grid grid-cols-12 gap-4 px-4 py-2 hover:bg-cyan-950/20 transition-colors items-center group relative overflow-hidden`}
+                    className={`grid grid-cols-6 sm:grid-cols-12 gap-2 sm:gap-4 px-2 sm:px-4 py-2 hover:bg-cyan-950/20 transition-colors items-center group relative overflow-hidden text-xs sm:text-base`}
                   >
                     <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                    <div className="col-span-1 md:col-span-1 text-lg font-bold">
+                    <div className="col-span-1 text-base sm:text-lg font-bold">
                       <span className={`${getRankStyle(row.rank)} font-orbitron`}>
                         #{row.rank}
                       </span>
                     </div>
 
-                    <div className="col-span-4 md:col-span-4 flex flex-col justify-center">
-                      <span className="font-bold text-white group-hover:text-cyan-200 transition-colors truncate text-base">
+                    <div className="col-span-3 sm:col-span-4 flex flex-col justify-center">
+                      <span className="font-bold text-white group-hover:text-cyan-200 transition-colors truncate text-xs sm:text-base">
                         {row.name}
                       </span>
-                      <span className="text-md text-orange-400/60 truncate uppercase tracking-wider flex items-center gap-1">
+                      <span className="text-xs sm:text-md text-orange-400/60 truncate uppercase tracking-wider flex items-center gap-1">
                         {row.institute}
                       </span>
                     </div>
 
-                    <div className="col-span-2 hidden md:flex justify-center">
+                    <div className="col-span-2 hidden sm:flex justify-center">
                       <a
                         href={`https://codeforces.com/profile/${row.cfHandle}`}
                         target="_blank"
-                        className="font-mono text-md text-cyan-300 bg-cyan-950/40 px-2 py-1 rounded border border-cyan-900/50 hover:bg-cyan-900/40 hover:text-white transition-colors"
+                        className="font-mono text-xs sm:text-md text-cyan-300 bg-cyan-950/40 px-2 py-1 rounded border border-cyan-900/50 hover:bg-cyan-900/40 hover:text-white transition-colors"
                       >
                         @{row.cfHandle}
                       </a>
                     </div>
 
-                    <div className="col-span-2 md:col-span-2 text-center">
-                      <span className="font-bold text-green-400 text-lg">
+                    <div className="col-span-2 text-center">
+                      <span className="font-bold text-green-400 text-base sm:text-lg">
                         {row.problemsSolved}
                       </span>
                     </div>
 
-                    <div className="col-span-3 md:col-span-3 text-right font-mono">
+                    <div className="col-span-2 sm:col-span-3 text-right font-mono">
                       <div className="flex flex-col items-end">
-                        <span className="text-orange-400 font-bold text-lg leading-none">
+                        <span className="text-orange-400 font-bold text-base sm:text-lg leading-none">
                           {row.points}
                         </span>
-                        <span className="text-md font-semibold text-red-400/60 mt-1">
+                        <span className="text-xs sm:text-md font-semibold text-red-400/60 mt-1">
                           + {row.penalty} penalty
                         </span>
                       </div>
