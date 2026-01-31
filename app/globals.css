@@ -6,6 +6,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-orbitron: var(--font-orbitron);
+  --font-code: var(--font-fira-code);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -58,7 +60,6 @@ html, body {
   scroll-behavior: smooth;
 }
 
-/* Hide vertical scrollbar but keep scrolling */
 html, body {
   scrollbar-width: none;
 }
@@ -190,4 +191,47 @@ body::-webkit-scrollbar {
   body {
     @apply bg-background text-foreground;
   }
+}
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(5, 10, 20, 0.8);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #00ffff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px #00ffff;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0ea5e9;
+}
+
+.cyber-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #1a95b7 rgba(0, 0, 0, 0.3);
+}
+
+.cyber-scrollbar::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.cyber-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+.cyber-scrollbar::-webkit-scrollbar-thumb {
+  background: #1592b4 !important;
+  border-radius: 0px !important;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.cyber-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #22bed6 !important;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.6) !important;
 }
