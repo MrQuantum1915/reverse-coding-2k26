@@ -22,15 +22,16 @@ function getServiceClient() {
 export async function verifyAdminAccess(): Promise<boolean> {
   const supabase = await createClient_server();
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+    error: authError
+  } = await supabase.auth.getUser();
 
-  if (!session?.user) return false;
+  if (!user || authError) return false;
 
   const { data: profile } = await supabase
     .from("profiles")
     .select("role")
-    .eq("id", session.user.id)
+    .eq("id", user.id)
     .single();
 
   return profile?.role === "admin";

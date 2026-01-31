@@ -77,20 +77,21 @@ export const getContestStatus = cache(async (): Promise<ContestState> => {
 // use react cache 
 
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
+  const supabase = await createClient_server();
   try {
-    const supabase = await createClient_server();
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user },
+      error: authError
+    } = await supabase.auth.getUser();
 
-    if (!session?.user) {
+    if (!user || authError) {
       return null;
     }
 
     const { data: profile, error } = await supabase
       .from("profiles")
       .select("codeforces_id, name, role")
-      .eq("id", session.user.id)
+      .eq("id", user.id)
       .single();
 
     if (error) {
@@ -98,8 +99,8 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     }
 
     return {
-      id: session.user.id,
-      email: session.user.email || "",
+      id: user.id,
+      email: user.email || "",
       role: (profile?.role as UserRole) || "participant",
       codeforces_id: profile?.codeforces_id,
       name: profile?.name,
