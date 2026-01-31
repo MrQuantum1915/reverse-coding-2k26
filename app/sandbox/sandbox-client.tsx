@@ -324,8 +324,8 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                 <>
                   <div>
                     <h3 className="text-orange-500 text-sm font-bold mb-1 uppercase tracking-wider font-code">Objective</h3>
-                    <p className="text-base text-cyan-100 leading-relaxed font-light">
-                      {activeModuleData.objective}
+                    <p className="text-base text-cyan-100 leading-relaxed font-light whitespace-pre-wrap">
+                      {activeModuleData.objective.replace(/\\n/g, '\n')}
                     </p>
                   </div>
 
@@ -340,7 +340,7 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                             <ChevronRight size={14} className="mt-[3px] text-cyan-400" />
                             <span className="whitespace-nowrap font-bold text-cyan-500">{key}:</span>
                           </span>
-                          <span className="text-white">{value}</span>
+                          <span className="text-white whitespace-pre-wrap">{value.replace(/\\n/g, '\n')}</span>
                         </li>
                       ))}
                     </ul>
@@ -350,8 +350,8 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                     <h3 className="text-cyan-500 text-sm font-bold mb-1 uppercase tracking-wider flex items-center gap-2">
                       <Zap size={14} /> Intel
                     </h3>
-                    <p className="text-sm italic text-cyan-400/60 leading-relaxed">
-                      {activeModuleData.intel}
+                    <p className="text-sm italic text-cyan-400/60 leading-relaxed whitespace-pre-wrap">
+                      {activeModuleData.intel.replace(/\\n/g, '\n')}
                     </p>
                   </div>
                 </>

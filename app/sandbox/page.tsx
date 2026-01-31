@@ -1,13 +1,21 @@
 import { Suspense } from "react";
 import { getProblems } from "./_actions/getProblems";
 import { createClient_server } from "@/utils/supabaseServer";
+import { canAccessContest, getContestConfig } from "@/lib/contest-state";
 import SandboxClient from "./sandbox-client";
+import ContestGuard from "../components/contest-guard";
 
 async function SandboxContent() {
-  // Fetch problems server-side using service role (bypasses RLS)
+  // check contest access (handles time-gating and role checks)
+  const [accessResult, config] = await Promise.all([
+    canAccessContest(),
+    getContestConfig(),
+  ]);
+
+  // fetch problems (will be filtered based on user role)
   const problems = await getProblems();
 
-  // Get current user's codeforces_id if logged in
+  // get current user's codeforces_id
   let initialUserId = "GUEST_USER";
   try {
     const supabase = await createClient_server();
@@ -30,7 +38,16 @@ async function SandboxContent() {
     console.error("Error fetching user:", error);
   }
 
-  return <SandboxClient initialModules={problems} initialUserId={initialUserId} />;
+  return (
+    <ContestGuard
+      status={accessResult.reason}
+      startTime={config?.start_time || null}
+      endTime={config?.end_time || null}
+      isPrivileged={accessResult.isPrivileged}
+    >
+      <SandboxClient initialModules={problems} initialUserId={initialUserId} />
+    </ContestGuard>
+  );
 }
 
 function SandboxLoading() {
