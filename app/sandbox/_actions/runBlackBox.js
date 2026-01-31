@@ -40,7 +40,7 @@ export async function runBlackBox(input, problemId) {
         const { data, error } = await supabase
             .from('problems')
             .select('blackbox_script')
-            .eq('problem_id', problemId)
+            .eq('id', problemId)
             .single();
 
         if (error || !data?.blackbox_script) {
