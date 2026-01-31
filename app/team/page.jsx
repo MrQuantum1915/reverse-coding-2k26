@@ -1,10 +1,60 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Linkedin, Instagram } from "lucide-react";
 import { Orbitron } from "next/font/google";
+import Image from "next/image";
 import VoidParticles from "../components/VoidParticles";
 import Snowfall from "react-snowfall";
+
+function TeamImage({ src, alt }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  const handleLoad = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const handleError = useCallback(() => {
+    setHasError(true);
+    setIsLoaded(true);
+  }, []);
+
+  return (
+    <div className="w-full h-full relative">
+      {/* Skeleton loader */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-zinc-800 animate-pulse">
+          <div className="absolute inset-0 bg-linear-to-t from-cyan-900/20 to-transparent" />
+        </div>
+      )}
+      
+      {hasError ? (
+        <div 
+          className="w-full h-full"
+          style={{
+            backgroundImage: "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')",
+            backgroundColor: '#1a1a1a'
+          }}
+        />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 768px) 100vw, 300px"
+          className={`object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0 grayscale-[0.3] ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading="lazy"
+          placeholder="empty"
+        />
+      )}
+    </div>
+  );
+}
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -308,10 +358,10 @@ function Page() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex flex-wrap justify-center gap-x-12 gap-y-16"
           >
             {currentData.map((person) => (
@@ -319,7 +369,7 @@ function Page() {
                 key={person.name}
                 className="group flex flex-col items-center"
               >
-                <div className="relative w-full max-w-75 aspect-3/4 p-1 
+                <div className="relative w-[280px] h-[370px] p-1 
                                 border border-cyan-500/20 bg-black/50 backdrop-blur-sm
                                 group-hover:border-cyan-400/50 group-hover:shadow-[0_0_30px_rgba(0,255,255,0.15)]
                                 transition-all duration-500">
@@ -330,17 +380,9 @@ function Page() {
                   <div className="absolute -bottom-px -right-px w-4 h-4 border-b-2 border-r-2 border-cyan-500 transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-cyan-400/30"></div>
 
                   <div className="w-full h-full relative overflow-hidden bg-zinc-900">
-                    <img
-                      src={person.photo}
-                      alt={person.name}
-                      className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0 grayscale-[0.3]"
-                      onError={(e) => {
-                        e.target.src =
-                          "https://www.transparenttextures.com/patterns/carbon-fibre.png";
-                      }}
-                    />
+                    <TeamImage src={person.photo} alt={person.name} />
                     
-                    <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
 
                     <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-center gap-4 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 transition-transform duration-300 bg-black/60 backdrop-blur-md border-t border-cyan-500/30">
                         {person.linkedin && (
