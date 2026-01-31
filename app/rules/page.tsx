@@ -133,7 +133,7 @@ export default function RulesPage() {
           <SubHeading>B. Interface Usage</SubHeading>
           <ul className="list-disc list-inside space-y-2 ml-4 marker:text-cyan-500">
              <li>
-                <strong className="text-white">Rate Limiting:</strong> The Black Box interface is rate-limited to prevent server overload. Automated scripts/bots designed to brute-force the input space (e.g., sending 1000 requests/second) will result in an IP ban.
+                <strong className="text-white">Rate Limiting:</strong> The Black Box interface is rate-limited to prevent server overload. <span className="text-cyan-300 font-semibold">You may only execute <u>1 request every 2 seconds</u> on the Sandbox.</span> Automated scripts/bots designed to brute-force the input space (e.g., sending 1000 requests/second) will automatically be blocked by the system.
             </li>
             <li>
                 <strong className="text-white">Input Constraints:</strong> The Black Box on the website may handle smaller constraints (e.g., <em className="text-cyan-200">N ≤ 100</em>) for demonstration. Note that constraints will be explicitly mentioned on the Black Box interface. The Codeforces system tests may test up to <em className="text-cyan-200">N ≤ 10<sup>9</sup></em> or <em className="text-cyan-200">10<sup>18</sup></em>. Your logic must hold for the larger constraints.
