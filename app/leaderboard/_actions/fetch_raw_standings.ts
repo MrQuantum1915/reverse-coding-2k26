@@ -1,5 +1,6 @@
 import 'server-only'; //safety-> no client can import this file/call function from this file
 import crypto from 'crypto';
+import { getContestConfig } from '@/lib/contest-state';
 
 const BASE_URL = 'https://codeforces.com/api';
 
@@ -7,7 +8,9 @@ export async function fetchRawStandings() {
 
     const API_KEY = process.env.CODEFORCES_API_KEY;
     const API_SECRET = process.env.CODEFORCES_API_SECRET;
-    const contest_id = process.env.NEXT_PUBLIC_CONTEST_ID;
+
+    const config = await getContestConfig();
+    const contest_id = config?.cf_contest_id
 
     const time = Math.floor(Date.now() / 1000);
 
@@ -38,5 +41,6 @@ export async function fetchRawStandings() {
         console.error(`CF API Error: ${data1.comment}`);
         return [];
     }
+    console.log(contest_id, data1);
     return data1;
 }

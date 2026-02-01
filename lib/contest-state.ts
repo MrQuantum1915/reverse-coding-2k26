@@ -13,6 +13,7 @@ export interface ContestConfig {
   end_time: string;
   is_maintenance_mode: boolean;
   registration_open: boolean;
+  cf_contest_id?: string;
 }
 
 export interface CurrentUser {

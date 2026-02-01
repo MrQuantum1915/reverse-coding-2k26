@@ -43,25 +43,28 @@ async function fetchStandings() {
 
             const userData = allUsersData.find(user => user.codeforces_id === cfHandle);
 
-            if (userData) {
-                const questions_status: Record<string, string> = {};
-                ranklistRow.problemResults.forEach((pr: any, index: number) => {
-                    if (pr.points > 0) {
-                        questions_status[(index + 1).toString()] = "SOLVED";
-                    }
-                });
-
-                dbUpdates.push(
-                    supabase.from('profiles')
-                        .update({ questions_status })
-                        .eq('id', userData.id)
-                );
+            //only show registered users in leaderboard
+            if (!userData) {
+                continue;
             }
+
+            const questions_status: Record<string, string> = {};
+            ranklistRow.problemResults.forEach((pr: any, index: number) => {
+                if (pr.points > 0) {
+                    questions_status[(index + 1).toString()] = "SOLVED";
+                }
+            });
+
+            dbUpdates.push(
+                supabase.from('profiles')
+                    .update({ questions_status })
+                    .eq('id', userData.id)
+            );
 
             standings.push({
                 rank,
-                name: userData ? userData.name : cfHandle,
-                institute: userData ? userData.institute : 'N/A',
+                name: userData.name,
+                institute: userData.institute || 'N/A',
                 cfHandle,
                 points,
                 penalty,
@@ -73,6 +76,7 @@ async function fetchStandings() {
     await Promise.all(dbUpdates);
 
     standings.sort((a, b) => a.rank - b.rank);
+    console.log(standings.map(s => s.name));
     return standings;
 }
 

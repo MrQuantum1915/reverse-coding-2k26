@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS contest_config (
     end_time TIMESTAMPTZ NOT NULL DEFAULT '2026-02-01T17:00:00+05:30',
     is_maintenance_mode BOOLEAN DEFAULT false,
     registration_open BOOLEAN DEFAULT true,
+    cf_contest_id TEXT, -- Codeforces contest/gym ID for leaderboard
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     
