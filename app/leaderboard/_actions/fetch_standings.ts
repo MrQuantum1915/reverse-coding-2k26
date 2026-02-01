@@ -20,14 +20,38 @@ async function fetchStandings() {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // Fetch problems to get cf_index -> problem id mapping (only ACTIVE visibility problems)
+    const { data: problemsData, error: problemsError } = await supabase
+        .from('problems')
+        .select('id, cf_index, visibility')
+        .in('visibility', ['ACTIVE', 'TEST']);
+
+    if (problemsError) {
+        console.log('Error fetching problems data from DB: ', problemsError.message);
+    }
+
+    // Create mapping: cf_index (A, B, C...) -> DB problem id
+    const cfIndexToDbId: Record<string, string> = {};
+    const allProblemIds: string[] = [];
+    (problemsData || []).forEach((p: any) => {
+        allProblemIds.push(String(p.id));
+        if (p.cf_index) {
+            cfIndexToDbId[p.cf_index] = String(p.id);
+        }
+    });
+
     const { data: allUsersData, error } = await supabase
         .from('profiles')
-        .select('id, name, institute, codeforces_id');
+        .select('id, name, institute, codeforces_id, questions_status');
 
     if (error) {
         console.log('Error fetching users data from DB: ', error.message);
         throw new Error(`DB Error: ${error.message}`);
     }
+
+    // Get CF problem indices from the API response
+    const cfProblems = rawData.result.problems || [];
+    const cfProblemIndices = cfProblems.map((p: any) => p.index); // ['A', 'B', 'C', ...]
 
     // rank, name, institute, cfhandle, 
     const standings = [];
@@ -48,10 +72,21 @@ async function fetchStandings() {
                 continue;
             }
 
+            // Initialize questions_status with all contest problems as ACTIVE
             const questions_status: Record<string, string> = {};
+            allProblemIds.forEach(problemId => {
+                // Preserve SOLVED status if already exists, otherwise set ACTIVE
+                const existingStatus = userData.questions_status?.[problemId];
+                questions_status[problemId] = existingStatus === "SOLVED" ? "SOLVED" : "ACTIVE";
+            });
+            
+            // Update based on CF results using cf_index mapping
             ranklistRow.problemResults.forEach((pr: any, index: number) => {
-                if (pr.points > 0) {
-                    questions_status[(index + 1).toString()] = "SOLVED";
+                const cfIndex = cfProblemIndices[index]; // e.g., 'A', 'B', 'C'
+                const dbProblemId = cfIndexToDbId[cfIndex]; // e.g., '3', '4', '5'
+                
+                if (dbProblemId && pr.points > 0) {
+                    questions_status[dbProblemId] = "SOLVED";
                 }
             });
 

@@ -93,7 +93,7 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
 
     const checkUser = async () => {
       if (initialUserId !== "LOADING..." && initialUserId !== "GUEST_USER") {
-           return;
+        return;
       }
 
       const getCookie = (name: string) => {
@@ -124,7 +124,7 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
           }
         }
       } else {
-         setUserId(cookieUser);
+        setUserId(cookieUser);
       }
     };
 
@@ -457,9 +457,15 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
               <NeonButton
                 text="SUBMIT_CODE"
                 onClick={() => {
-                   if (activeModuleData?.cf_link) {
-                       window.open(activeModuleData.cf_link, '_blank');
-                   }
+                  if (activeModuleData?.cf_link) {
+                    // due to codeforces session-based access control for gym problem, need to do this instead :(
+                    const gymMatch = activeModuleData.cf_link.match(/gym\/(\d+)/);
+                    if (gymMatch) {
+                      window.open(`https://codeforces.com/gym/${gymMatch[1]}`, '_blank');
+                    }
+                  } else {
+                    addLog('No submission link available for this module', 'error');
+                  }
                 }}
                 borderColor="#f97316"
                 textColor="#f97316"
