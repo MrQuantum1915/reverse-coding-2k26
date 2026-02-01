@@ -30,12 +30,13 @@ interface Log {
 export interface Module {
   id: string;
   name: string;
-  difficulty: "EASY" | "MEDIUM" | "HARD";
+  difficulty: "EASY" | "MEDIUM" | "HARD" | null;
   status: "ACTIVE" | "SOLVED";
   objective: string;
   constraints: Record<string, string>;
   intel: string;
   cf_link?: string;
+  author?: string;
 }
 
 interface SandboxClientProps {
@@ -299,9 +300,11 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                             SOLVED
                           </span>
                         )}
-                        <span className={`text-sm px-1 border ${m.difficulty === 'HARD' ? 'border-red-900 text-red-500' : m.difficulty === 'MEDIUM' ? 'border-yellow-900 text-yellow-500' : 'border-cyan-900 text-cyan-400'}`}>
-                          {m.difficulty}
-                        </span>
+                        {m.difficulty && (
+                          <span className={`text-sm px-1 border ${m.difficulty === 'HARD' ? 'border-red-900 text-red-500' : m.difficulty === 'MEDIUM' ? 'border-yellow-900 text-yellow-500' : 'border-cyan-900 text-cyan-400'}`}>
+                            {m.difficulty}
+                          </span>
+                        )}
                       </div>
                     </div>
                     {activeModule === m.id && (
@@ -354,6 +357,17 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                       {activeModuleData.intel.replace(/\\n/g, '\n')}
                     </p>
                   </div>
+
+                  {activeModuleData.author && (
+                    <div className="bg-orange-950/20 p-3 border border-orange-500/30">
+                      <h3 className="text-orange-500 text-sm font-bold mb-1 uppercase tracking-wider flex items-center gap-2">
+                        <ShieldCheck size={14} /> Mission Handler
+                      </h3>
+                      <p className="text-sm text-orange-300 font-mono">
+                        {activeModuleData.author}
+                      </p>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-cyan-400/60">

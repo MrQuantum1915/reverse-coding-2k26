@@ -14,13 +14,14 @@ export type ProblemVisibility = "DRAFT" | "TEST" | "PRACTICE" | "ACTIVE" | "HIDD
 export interface Problem {
   id: string;
   name: string;
-  difficulty: "EASY" | "MEDIUM" | "HARD";
+  difficulty: "EASY" | "MEDIUM" | "HARD" | null;
   status: "ACTIVE" | "SOLVED";
   objective: string;
   constraints: Record<string, string>;
   intel: string;
   cf_link?: string;
   isPractice?: boolean; // flag to identify practice problems
+  author?: string;
 }
 
 export interface GetProblemsResult {
@@ -75,7 +76,7 @@ export async function getProblems(): Promise<Problem[]> {
 
   const { data, error } = await supabase
     .from("problems")
-    .select("id, title, difficulty, status, visibility, description, intel, constraints, cf_contest_id, cf_index")
+    .select("id, title, difficulty, status, visibility, description, intel, constraints, cf_contest_id, cf_index, author")
     .in("visibility", allowedVisibility)
     .order("id", { ascending: true });
 
@@ -87,19 +88,20 @@ export async function getProblems(): Promise<Problem[]> {
   const problems: Problem[] = (data || []).map((problem) => {
     let cf_link: string | undefined;
     if (problem.cf_contest_id && problem.cf_index) {
-      cf_link = `https://codeforces.com/contest/${problem.cf_contest_id}/problem/${problem.cf_index}`;
+      cf_link = `https://codeforces.com/gym/${problem.cf_contest_id}/problem/${problem.cf_index}`;
     }
 
     return {
       id: String(problem.id),
       name: problem.title,
-      difficulty: problem.difficulty || "MEDIUM",
+      difficulty: problem.difficulty || null,
       status: problem.status || "ACTIVE",
       objective: problem.description,
       constraints: problem.constraints || {},
       intel: problem.intel || "",
       cf_link,
       isPractice: problem.visibility === "PRACTICE",
+      author: problem.author || undefined,
     };
   });
 
