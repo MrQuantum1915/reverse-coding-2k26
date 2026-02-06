@@ -188,12 +188,12 @@ export default function Page() {
       <div className="absolute inset-0 bg-radial-gradient(circle at center, transparent 0%, black 100%) pointer-events-none" />
 
 
-      <div className="absolute inset-0 z-10 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-15 text-white p-4">
+      <div className="absolute inset-0 z-10 flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12 xl:gap-15 text-white p-2 sm:p-4">
         <div className="relative flex flex-col items-center lg:items-start text-center lg:text-left point">
-           <h1 className="pointer-events-none text-5xl md:text-7xl lg:text-9xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-cyan-400 drop-shadow-[0_0_25px_rgba(0,255,255,0.6)]">
+           <h1 className="pointer-events-none text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-cyan-400 drop-shadow-[0_0_25px_rgba(0,255,255,0.6)]">
              TESSERACT
            </h1>
-           <div className="pointer-events-none text-2xl md:text-3xl lg:text-4xl mt-2 lg:mt-4 tracking-[0.8em] lg:tracking-[1em] text-cyan-200/80 lg:pl-4">2K26</div>
+           <div className="pointer-events-none text-lg sm:text-2xl md:text-3xl lg:text-4xl mt-2 lg:mt-4 tracking-[0.5em] sm:tracking-[0.8em] lg:tracking-[1em] text-cyan-200/80 lg:pl-4">2K26</div>
         </div>
 
         {user ? (

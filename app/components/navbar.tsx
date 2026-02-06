@@ -38,13 +38,13 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed top-0 z-50 w-full backdrop-blur-md shadow-lg border-b border-white/10 bg-black/20">
-        <div className="mx-4 md:mx-16 px-4">
+        <div className="mx-2 sm:mx-4 lg:mx-16 px-2 sm:px-4">
           <div className="grid grid-cols-[1fr_auto_1fr] items-center">
 
-            <div className="hidden md:flex justify-end gap-12">
-              <Link className="nav-link" href="/"><p className="text-lg font-bold tracking-widest">HOME</p></Link>
-              <Link className="nav-link" href="/team"><p className="text-lg font-bold tracking-widest">TEAM</p></Link>
-              <Link className="nav-link" href="/rules"><p className="text-lg font-bold tracking-widest">RULES</p></Link>
+            <div className="hidden md:flex justify-end gap-4 lg:gap-8 xl:gap-12">
+              <Link className="nav-link" href="/"><p className="text-sm lg:text-base xl:text-lg font-bold tracking-widest">HOME</p></Link>
+              <Link className="nav-link" href="/team"><p className="text-sm lg:text-base xl:text-lg font-bold tracking-widest">TEAM</p></Link>
+              <Link className="nav-link" href="/rules"><p className="text-sm lg:text-base xl:text-lg font-bold tracking-widest">RULES</p></Link>
             </div>
 
             <button
@@ -61,8 +61,8 @@ export default function Navbar() {
                 font-black
                 justify-self-center
                 bg-white text-black
-                px-10 md:px-14
-                py-1.5
+                px-4 sm:px-8 md:px-10 lg:px-14
+                py-1 sm:py-1.5
                 logo
                 whitespace-nowrap
                 hover:scale-105
@@ -70,8 +70,10 @@ export default function Navbar() {
                 duration-300
                 ease-in-out
                 letter-spacing-wide
-                text-2xl
-                sm:text-5xl
+                text-lg
+                sm:text-2xl
+                md:text-4xl
+                lg:text-5xl
               `}
               // style={{
               //   letterSpacing: "0.20em",
@@ -81,10 +83,10 @@ export default function Navbar() {
             </Link>
 
 
-            <div className="hidden md:flex justify-start gap-12">
-              <Link className="nav-link" href="/sandbox"><p className="text-lg font-bold tracking-widest">SANDBOX</p></Link>
-              <Link className="nav-link" href="/leaderboard"><p className="text-lg font-bold tracking-widest">LEADERBOARD</p></Link>
-              <Link className="nav-link" href="/login"><p className="text-lg font-bold tracking-widest">{user ? "PROFILE" : "SIGN-IN"}</p></Link>
+            <div className="hidden md:flex justify-start gap-4 lg:gap-8 xl:gap-12">
+              <Link className="nav-link" href="/sandbox"><p className="text-sm lg:text-base xl:text-lg font-bold tracking-widest">SANDBOX</p></Link>
+              <Link className="nav-link" href="/leaderboard"><p className="text-sm lg:text-base xl:text-lg font-bold tracking-widest">RANKS</p></Link>
+              <Link className="nav-link" href="/login"><p className="text-sm lg:text-base xl:text-lg font-bold tracking-widest">{user ? "PROFILE" : "SIGN-IN"}</p></Link>
             </div>
             
             <div className="md:hidden w-6" />

@@ -5,18 +5,18 @@ const Bounty_board = () => {
   return (
     <div className="mt-12 sm:mt-20 mx-4 md:mx-10 mb-16 sm:mb-20 dark:bg-black">
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <h1 className="font-extrabold text-2xl sm:text-3xl md:text-4xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
+        <h1 className="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
           BOUNTY BOARD
         </h1>
-        <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl text-[rgb(0,255,251)] [text-shadow:_0_0_15px_rgba(0,255,251,0.7)]">
+        <h1 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[rgb(0,255,251)] [text-shadow:_0_0_15px_rgba(0,255,251,0.7)]">
           POOL : ₹10,000
         </h1>
       </div>
 
-      <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-25">
+      <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-16 xl:gap-25">
 
-        <div className="mt-20">
+        <div className="mt-6 md:mt-20">
           <BountyCard
             title="RUNNER UP"
             prize={
@@ -43,7 +43,7 @@ const Bounty_board = () => {
           />
         </div>
 
-        <div className="mt-20">
+        <div className="mt-6 md:mt-20">
           <BountyCard
             title="SPECIAL OPS"
             prize={

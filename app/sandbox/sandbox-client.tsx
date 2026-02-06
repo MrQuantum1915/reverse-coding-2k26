@@ -192,77 +192,77 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
   const activeModuleData = modules.find(m => m.id === activeModule) || modules[0];
 
   return (
-    <div className="flex flex-col h-screen w-full pt-10 md:pt-20 bg-black items-center justify-center px-4 pb-4 md:px-8 md:pb-8 font-code text-cyan-400 selection:bg-cyan-900 selection:text-white overflow-hidden">
+    <div className="flex flex-col h-screen w-full pt-12 sm:pt-14 md:pt-16 lg:pt-20 bg-black items-center justify-center px-1 sm:px-2 md:px-4 lg:px-8 pb-2 md:pb-4 lg:pb-8 font-code text-cyan-400 selection:bg-cyan-900 selection:text-white overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-950/20 via-black to-black pointer-events-none" />
       <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
 
       <div className="relative w-full h-full max-w-[1600px] border-2 border-cyan-400/80 bg-black/80 flex flex-col shadow-[0_0_50px_rgba(8,145,178,0.15)] overflow-hidden">
 
-        <header className="shrink-0 border-b-2 border-cyan-400/80 bg-cyan-950/20 p-4 md:px-8 flex justify-between items-center text-sm uppercase tracking-widest z-10">
-          <div className="flex items-center gap-8">
-            <span className="text-orange-500 font-orbitron font-bold text-2xl tracking-tighter flex items-center gap-3">
-              <Activity size={24} /> SANDBOX
+        <header className="shrink-0 border-b-2 border-cyan-400/80 bg-cyan-950/20 p-2 sm:p-4 md:px-6 lg:px-8 flex flex-wrap justify-between items-center text-xs sm:text-sm uppercase tracking-widest z-10 gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 flex-shrink min-w-0">
+            <span className="text-orange-500 font-orbitron font-bold text-lg sm:text-xl lg:text-2xl tracking-tighter flex items-center gap-2">
+              <Activity size={20} className="sm:w-6 sm:h-6" /> SANDBOX
             </span>
-            <div className="hidden md:flex opacity-90 gap-8 border-l border-cyan-400/80 pl-8">
+            <div className="hidden lg:flex opacity-90 gap-4 xl:gap-8 border-l border-cyan-400/80 pl-4 xl:pl-8">
               <div className="flex flex-col">
-                <span className="text-md text-cyan-400">SYS_TIME</span>
-                <span className="text-orange-400 font-bold flex items-center gap-2 text-sm">
+                <span className="text-xs xl:text-sm text-cyan-400">SYS_TIME</span>
+                <span className="text-orange-400 font-bold flex items-center gap-2 text-xs xl:text-sm">
                   <Clock size={14} /> {sysTime}
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="text-md text-cyan-400">NETWORK</span>
-                <span className={`font-bold flex items-center gap-2 text-sm ${isOnline ? "text-green-400" : "text-red-500"}`}>
+                <span className="text-xs xl:text-sm text-cyan-400">NETWORK</span>
+                <span className={`font-bold flex items-center gap-2 text-xs xl:text-sm ${isOnline ? "text-green-400" : "text-red-500"}`}>
                   <Wifi size={14} /> {isOnline ? "ONLINE" : "OFFLINE"}
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="text-md text-cyan-400">USER</span>
-                <span className="text-orange-400 font-bold flex items-center gap-2 text-sm">
+                <span className="text-xs xl:text-sm text-cyan-400">USER</span>
+                <span className="text-orange-400 font-bold flex items-center gap-2 text-xs xl:text-sm truncate max-w-[120px] xl:max-w-none">
                   <Terminal size={14} /> {userId}
                 </span>
               </div>
-              <div className="flex flex-col">
-                <span className="text-md text-cyan-400">Evaluation Engine</span>
-                <span className="text-green-400 font-bold flex items-center gap-2 text-sm">
+              <div className="hidden xl:flex flex-col">
+                <span className="text-xs xl:text-sm text-cyan-400">Evaluation Engine</span>
+                <span className="text-green-400 font-bold flex items-center gap-2 text-xs xl:text-sm">
                   <Cpu size={14} /> CodeForces
                 </span>
               </div>
 
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4 flex-shrink-0">
             <NeonButton
               onClick={fetchQuestionsStatus}
               borderColor="#22d3ee"
               textColor="#22d3ee"
-              height={45}
-              width="100px"
+              height={40}
+              width="80px"
               size="sm"
             >
-              <div className="flex items-center gap-2 text-sm font-bold tracking-widest">
-                <RefreshCw size={16} />
-                SYNC
+              <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold tracking-widest">
+                <RefreshCw size={14} />
+                <span className="hidden sm:inline">SYNC</span>
               </div>
             </NeonButton>
             <NeonButton
               onClick={() => window.open('/leaderboard', '_blank')}
               borderColor="#f97316"
               textColor="#f97316"
-              height={45}
-              width="140px"
+              height={40}
+              width="100px"
               size="sm"
             >
-              <div className="flex items-center gap-2 text-sm font-bold tracking-widest">
-                <Trophy size={16} />
-                RANKINGS
+              <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold tracking-widest">
+                <Trophy size={14} />
+                <span className="hidden sm:inline">RANKS</span>
               </div>
             </NeonButton>
           </div>
         </header>
 
-        <main className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-12 gap-6 p-2 bg-gray-900/30 relative z-10">
-          <section className="col-span-12 md:col-span-3 flex flex-col border border-cyan-500/50 bg-black/60 overflow-hidden h-full font-code">
+        <main className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-6 p-1 sm:p-2 bg-gray-900/30 relative z-10 overflow-hidden">
+          <section className="col-span-12 lg:col-span-3 flex flex-col border border-cyan-500/50 bg-black/60 overflow-hidden h-full font-code min-h-[200px] lg:min-h-0">
             <div className="p-3 border-b border-cyan-500/50 bg-cyan-950/20 flex items-center justify-between shrink-0">
               <span className="text-sm font-bold tracking-widest flex items-center gap-2 text-cyan-100">
                 <Terminal size={16} className="text-cyan-500" /> MODULE_SELECTOR
@@ -316,7 +316,7 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
             </div>
           </section>
 
-          <section className="col-span-12 md:col-span-5 flex flex-col border border-cyan-500/50 bg-black/60 overflow-hidden h-full relative font-code">
+          <section className="col-span-12 lg:col-span-5 flex flex-col border border-cyan-500/50 bg-black/60 overflow-hidden h-full relative font-code min-h-[300px] lg:min-h-0">
             <div className="p-3 border-b border-cyan-500/50 bg-cyan-950/20 flex items-center gap-2 shrink-0">
               <ShieldCheck size={16} className="text-orange-500" />
               <span className="text-sm font-bold tracking-widest text-cyan-100">MISSION_PROTOCOL</span>
@@ -377,11 +377,11 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
               )}
             </div>
 
-            <div className="mt-auto p-4 border-t border-cyan-500/50 shrink-0 bg-black/40">
-              <label className="text-sm text-cyan-500 uppercase tracking-widest px-1 mb-2 block">Enter_Input_Parameter</label>
+            <div className="mt-auto p-2 sm:p-4 border-t border-cyan-500/50 shrink-0 bg-black/40">
+              <label className="text-xs sm:text-sm text-cyan-500 uppercase tracking-widest px-1 mb-2 block">Enter_Input_Parameter</label>
               <div className="flex gap-2 items-end">
-                <div className="flex-1 bg-black border border-cyan-400/80 flex items-start px-3 py-2 focus-within:border-orange-500 transition-colors min-h-[45px]">
-                  <span className="text-cyan-400 mr-2 opacity-50 font-bold mt-[2px]">&gt;</span>
+                <div className="flex-1 bg-black border border-cyan-400/80 flex items-start px-2 sm:px-3 py-2 focus-within:border-orange-500 transition-colors min-h-[40px]">
+                  <span className="text-cyan-400 mr-1 sm:mr-2 opacity-50 font-bold mt-[2px]">&gt;</span>
                   <textarea
                     value={inputText}
                     onChange={(e) => {
@@ -396,19 +396,19 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                       }
                     }}
                     placeholder="INPUT_VALUE"
-                    className="bg-transparent border-none outline-none w-full text-white text-lg tracking-widest font-code resize-none overflow-y-auto cyber-scrollbar"
+                    className="bg-transparent border-none outline-none w-full text-white text-sm sm:text-lg tracking-widest font-code resize-none overflow-y-auto cyber-scrollbar"
                     rows={1}
                     style={{ maxHeight: '150px' }}
                     autoComplete="off"
                   />
                 </div>
-                <div className="w-[120px]">
+                <div className="w-[90px] sm:w-[120px] flex-shrink-0">
                   <NeonButton
-                    text={isExecuting ? "PROC..." : "EXECUTE"}
+                    text={isExecuting ? "..." : "EXE"}
                     onClick={handleExecute}
                     borderColor="#f97316"
                     textColor="#f97316"
-                    height={45}
+                    height={40}
                     fullWidth
                     size="sm"
                     disabled={isExecuting}
@@ -418,7 +418,7 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
             </div>
           </section>
 
-          <section className="col-span-12 md:col-span-4 flex flex-col border border-cyan-500/50 bg-black/60 overflow-hidden h-full font-code">
+          <section className="col-span-12 lg:col-span-4 flex flex-col border border-cyan-500/50 bg-black/60 overflow-hidden h-full font-code min-h-[250px] lg:min-h-0">
             <div className="p-3 border-b border-cyan-500/50 bg-cyan-950/20 flex items-center justify-between shrink-0">
               <span className="text-sm font-bold tracking-widest flex items-center gap-2 text-cyan-100">
                 <Activity size={16} className="text-green-500" /> I/O_STREAM_LOG
@@ -453,9 +453,9 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
               <div ref={logEndRef} />
             </div>
 
-            <div className="p-4 border-t  border-cyan-400/50 bg-cyan-800/10 flex justify-center shrink-0">
+            <div className="p-2 sm:p-4 border-t border-cyan-400/50 bg-cyan-800/10 flex justify-center shrink-0">
               <NeonButton
-                text="SUBMIT_CODE"
+                text="SUBMIT"
                 onClick={() => {
                   if (activeModuleData?.cf_link) {
                     // due to codeforces session-based access control for gym problem, need to do this instead :(
@@ -469,8 +469,8 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
                 }}
                 borderColor="#f97316"
                 textColor="#f97316"
-                height={50}
-                width="160px"
+                height={45}
+                width="120px"
               />
             </div>
           </section>

@@ -49,7 +49,6 @@ async function fetchStandings() {
         throw new Error(`DB Error: ${error.message}`);
     }
 
-    // Get CF problem indices from the API response
     const cfProblems = rawData.result.problems || [];
     const cfProblemIndices = cfProblems.map((p: any) => p.index); // ['A', 'B', 'C', ...]
 
@@ -82,8 +81,8 @@ async function fetchStandings() {
             
             // Update based on CF results using cf_index mapping
             ranklistRow.problemResults.forEach((pr: any, index: number) => {
-                const cfIndex = cfProblemIndices[index]; // e.g., 'A', 'B', 'C'
-                const dbProblemId = cfIndexToDbId[cfIndex]; // e.g., '3', '4', '5'
+                const cfIndex = cfProblemIndices[index];
+                const dbProblemId = cfIndexToDbId[cfIndex]; 
                 
                 if (dbProblemId && pr.points > 0) {
                     questions_status[dbProblemId] = "SOLVED";
@@ -110,8 +109,27 @@ async function fetchStandings() {
 
     await Promise.all(dbUpdates);
 
-    standings.sort((a, b) => a.rank - b.rank);
-    console.log(standings.map(s => s.name));
+    // sort by points (desc), then by penalty (asc) for proper ranking
+    standings.sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        return a.penalty - b.penalty;
+    });
+
+    // dense ranking no gaps
+    let currentRank = 1;
+    for (let i = 0; i < standings.length; i++) {
+        if (i > 0 && 
+            standings[i].points === standings[i - 1].points && 
+            standings[i].penalty === standings[i - 1].penalty) {
+            // Same rank as previous (tie)
+            standings[i].rank = standings[i - 1].rank;
+        } else {
+            standings[i].rank = currentRank;
+            currentRank++;
+        }
+    }
+
+    // console.log(standings.map(s => s.name));
     return standings;
 }
 

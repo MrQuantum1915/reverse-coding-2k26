@@ -73,7 +73,7 @@ export default function Page() {
   };
 
   return (
-    <div className="mt-12 flex flex-col h-[calc(100vh-5rem)] w-full bg-black font-code text-cyan-400 selection:bg-cyan-900 selection:text-white relative overflow-hidden">
+    <div className="mt-10 sm:mt-12 flex flex-col h-[calc(100vh-4rem)] sm:h-[calc(100vh-5rem)] w-full bg-black font-code text-cyan-400 selection:bg-cyan-900 selection:text-white relative overflow-hidden">
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-cyan-950/20 via-black to-black pointer-events-none" />
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_2px,3px_100%]" />
@@ -82,22 +82,22 @@ export default function Page() {
 
       <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto p-1 sm:p-2 md:p-4 h-full">
 
-        <header className="flex flex-col md:flex-row justify-between items-center gap-4 pb-2 sm:pb-4 bg-black/40 backdrop-blur-sm">
-          <div className="flex items-center gap-3 sm:gap-6">
-            <div className="p-3 border border-orange-500/50 bg-orange-950/10">
-              <Trophy size={32} className="text-orange-500" />
+        <header className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 pb-2 sm:pb-4 bg-black/40 backdrop-blur-sm">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
+            <div className="p-2 sm:p-3 border border-orange-500/50 bg-orange-950/10">
+              <Trophy size={24} className="sm:w-8 sm:h-8 text-orange-500" />
             </div>
             <div>
-              <h1 className={`${orbitron.className} text-lg sm:text-xl md:text-2xl font-black text-orange-400 tracking-wider`}>
+              <h1 className={`${orbitron.className} text-base sm:text-lg md:text-xl lg:text-2xl font-black text-orange-400 tracking-wider`}>
                 LEADERBOARD
               </h1>
-              <div className="flex items-center gap-2 sm:gap-3 mt-2 text-xs sm:text-sm text-cyan-400 font-bold tracking-widest uppercase">
-                <span className="flex items-center gap-1.5">
-                  <span className="relative flex h-2 w-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 mt-1 sm:mt-2 text-[10px] sm:text-xs lg:text-sm text-cyan-400 font-bold tracking-widest uppercase">
+                <span className="flex items-center gap-1">
+                  <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400"></span>  
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-green-500"></span>
                   </span>
-                  Live Feed
+                  Live
                 </span>
                 <span className="text-cyan-800">|</span>
                 <span className="flex items-center gap-1.5">
@@ -108,18 +108,18 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4">
             <NeonButton
               onClick={() => router.push('/sandbox')}
               borderColor="#f97316"
               textColor="#f97316"
-              height={45}
-              width="180px"
+              height={38}
+              width="120px"
               size="sm"
             >
-              <div className="flex items-center gap-2 text-sm font-bold tracking-widest">
-                <ArrowLeft size={16} />
-                BACK TO OPS
+              <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold tracking-widest">
+                <ArrowLeft size={14} />
+                BACK
               </div>
             </NeonButton>
           </div>

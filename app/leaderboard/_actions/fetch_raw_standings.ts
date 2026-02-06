@@ -41,6 +41,6 @@ export async function fetchRawStandings() {
         console.error(`CF API Error: ${data1.comment}`);
         return [];
     }
-    console.log(contest_id, data1);
+    // console.log(contest_id, data1);
     return data1;
 }
