@@ -199,7 +199,7 @@ function SandboxClient({ initialModules, initialUserId = "LOADING..." }: Sandbox
       <div className="relative w-full h-full max-w-[1600px] border-2 border-cyan-400/80 bg-black/80 flex flex-col shadow-[0_0_50px_rgba(8,145,178,0.15)] overflow-hidden">
 
         <header className="shrink-0 border-b-2 border-cyan-400/80 bg-cyan-950/20 p-2 sm:p-4 md:px-6 lg:px-8 flex flex-wrap justify-between items-center text-xs sm:text-sm uppercase tracking-widest z-10 gap-2">
-          <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 flex-shrink min-w-0">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 shrink min-w-0">
             <span className="text-orange-500 font-orbitron font-bold text-lg sm:text-xl lg:text-2xl tracking-tighter flex items-center gap-2">
               <Activity size={20} className="sm:w-6 sm:h-6" /> SANDBOX
             </span>
